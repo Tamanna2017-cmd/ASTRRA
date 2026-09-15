@@ -1,0 +1,496 @@
+/* =========================================================
+   ASTRRA TECH — RURU MAIN SECTIONS
+   All classes intentionally use the astrra- prefix.
+   No advanced animation library is required here.
+   Tamanna can animate the data-animate attributes later.
+   ========================================================= */
+
+.astrra-about,
+.astrra-services,
+.astrra-expertise,
+.astrra-process {
+  --astrra-black: #050505;
+  --astrra-white: #f5f5f2;
+  --astrra-muted: #9b9b96;
+  --astrra-gold: #c8a96b;
+  --astrra-border: rgba(245, 245, 242, 0.16);
+  background: var(--astrra-black);
+  color: var(--astrra-white);
+  position: relative;
+  overflow: hidden;
+}
+
+.astrra-about__container,
+.astrra-services__container,
+.astrra-expertise__container,
+.astrra-process__container {
+  width: min(1400px, calc(100% - 64px));
+  margin: 0 auto;
+}
+
+.astrra-about {
+  padding: 150px 0 110px;
+}
+
+.astrra-about__eyebrow,
+.astrra-services__eyebrow,
+.astrra-expertise__eyebrow,
+.astrra-process__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--astrra-gold);
+  font: 500 11px/1.2 "DM Mono", monospace;
+  letter-spacing: 0.16em;
+}
+
+.astrra-about__eyebrow-line,
+.astrra-services__eyebrow-line,
+.astrra-expertise__eyebrow-line,
+.astrra-process__eyebrow-line {
+  width: 46px;
+  height: 1px;
+  background: var(--astrra-gold);
+}
+
+.astrra-about__grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 9vw;
+  margin-top: 80px;
+}
+
+.astrra-about__kicker {
+  margin: 0 0 25px;
+  color: var(--astrra-muted);
+  font: 500 12px/1 "DM Mono", monospace;
+  letter-spacing: 0.2em;
+}
+
+.astrra-about__heading h2,
+.astrra-services__heading-grid h2,
+.astrra-expertise__hero h2,
+.astrra-process__heading-grid h2 {
+  margin: 0;
+  font: 400 clamp(52px, 7vw, 112px)/0.9 "Manrope", sans-serif;
+  letter-spacing: -0.055em;
+}
+
+.astrra-about__heading em,
+.astrra-services__heading-grid em,
+.astrra-expertise__hero em,
+.astrra-process__heading-grid em {
+  color: var(--astrra-gold);
+  font-style: normal;
+}
+
+.astrra-about__copy {
+  align-self: end;
+  padding-bottom: 8px;
+}
+
+.astrra-about__copy p {
+  max-width: 520px;
+  margin: 0 0 26px;
+  color: var(--astrra-muted);
+  font: 400 16px/1.8 "Manrope", sans-serif;
+}
+
+.astrra-about__copy .astrra-about__lead {
+  color: var(--astrra-white);
+  font-size: 21px;
+  line-height: 1.55;
+}
+
+.astrra-about__facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 55px;
+  border-top: 1px solid var(--astrra-border);
+  padding-top: 20px;
+}
+
+.astrra-about__facts span {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--astrra-gold);
+  font: 11px/1 "DM Mono", monospace;
+}
+
+.astrra-about__facts p {
+  margin: 0;
+  color: var(--astrra-white);
+  font-size: 12px;
+}
+
+.astrra-about__statement {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 130px;
+  color: var(--astrra-muted);
+  font: 500 clamp(12px, 1.2vw, 16px)/1 "DM Mono", monospace;
+  letter-spacing: 0.12em;
+}
+
+.astrra-about__statement strong {
+  color: var(--astrra-white);
+  font-weight: 500;
+}
+
+.astrra-about__statement i {
+  width: 45px;
+  height: 1px;
+  background: var(--astrra-gold);
+}
+
+/* SERVICES */
+
+.astrra-services {
+  padding: 140px 0;
+  border-top: 1px solid var(--astrra-border);
+}
+
+.astrra-services__heading-grid,
+.astrra-process__heading-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.45fr;
+  align-items: end;
+  gap: 60px;
+  margin-top: 75px;
+}
+
+.astrra-services__heading-grid p,
+.astrra-process__heading-grid p {
+  margin: 0 0 8px;
+  max-width: 430px;
+  color: var(--astrra-muted);
+  font: 400 16px/1.75 "Manrope", sans-serif;
+}
+
+.astrra-services__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  margin-top: 110px;
+  background: var(--astrra-border);
+  border: 1px solid var(--astrra-border);
+}
+
+.astrra-services__card {
+  min-height: 330px;
+  padding: 30px;
+  background: var(--astrra-black);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background 350ms ease, transform 350ms ease;
+}
+
+.astrra-services__card:hover {
+  background: #10100e;
+  transform: translateY(-3px);
+}
+
+.astrra-services__card-top,
+.astrra-services__card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.astrra-services__card-top {
+  color: var(--astrra-gold);
+  font: 10px/1 "DM Mono", monospace;
+  letter-spacing: 0.14em;
+}
+
+.astrra-services__card-content {
+  max-width: 510px;
+}
+
+.astrra-services__card-content h3 {
+  margin: 0 0 18px;
+  font: 400 clamp(25px, 3vw, 42px)/1 "Manrope", sans-serif;
+  letter-spacing: -0.04em;
+}
+
+.astrra-services__card-content p {
+  margin: 0;
+  max-width: 450px;
+  color: var(--astrra-muted);
+  font: 400 14px/1.7 "Manrope", sans-serif;
+}
+
+.astrra-services__card-line {
+  width: 75%;
+  height: 1px;
+  background: var(--astrra-border);
+  transition: width 400ms ease, background 400ms ease;
+}
+
+.astrra-services__card:hover .astrra-services__card-line {
+  width: 90%;
+  background: var(--astrra-gold);
+}
+
+.astrra-services__card-arrow {
+  color: var(--astrra-gold);
+  font-size: 22px;
+  transition: transform 300ms ease;
+}
+
+.astrra-services__card:hover .astrra-services__card-arrow {
+  transform: translate(4px, -4px);
+}
+
+/* EXPERTISE */
+
+.astrra-expertise {
+  padding: 150px 0 120px;
+  border-top: 1px solid var(--astrra-border);
+}
+
+.astrra-expertise__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.astrra-expertise__top > p {
+  max-width: 310px;
+  margin: 0;
+  color: var(--astrra-muted);
+  font: 400 14px/1.6 "Manrope", sans-serif;
+}
+
+.astrra-expertise__hero {
+  margin: 100px 0 100px;
+}
+
+.astrra-expertise__list {
+  border-top: 1px solid var(--astrra-border);
+}
+
+.astrra-expertise__item {
+  display: grid;
+  grid-template-columns: 90px 1fr 1.1fr 40px;
+  gap: 25px;
+  align-items: center;
+  min-height: 115px;
+  border-bottom: 1px solid var(--astrra-border);
+  transition: padding 350ms ease, background 350ms ease;
+}
+
+.astrra-expertise__item:hover {
+  padding: 0 25px;
+  background: #0c0c0b;
+}
+
+.astrra-expertise__number,
+.astrra-expertise__plus {
+  color: var(--astrra-gold);
+  font: 11px/1 "DM Mono", monospace;
+}
+
+.astrra-expertise__item h3 {
+  margin: 0;
+  font: 400 clamp(23px, 2.4vw, 38px)/1 "Manrope", sans-serif;
+  letter-spacing: -0.04em;
+}
+
+.astrra-expertise__item p {
+  max-width: 400px;
+  margin: 0;
+  color: var(--astrra-muted);
+  font: 400 13px/1.65 "Manrope", sans-serif;
+}
+
+.astrra-expertise__plus {
+  justify-self: end;
+  font-size: 20px;
+  transition: transform 300ms ease;
+}
+
+.astrra-expertise__item:hover .astrra-expertise__plus {
+  transform: rotate(90deg);
+}
+
+/* PROCESS */
+
+.astrra-process {
+  padding: 140px 0 160px;
+  border-top: 1px solid var(--astrra-border);
+}
+
+.astrra-process__track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  margin-top: 120px;
+}
+
+.astrra-process__track-line {
+  position: absolute;
+  top: 25px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--astrra-border);
+}
+
+.astrra-process__step {
+  position: relative;
+  padding-right: 30px;
+}
+
+.astrra-process__marker {
+  position: relative;
+  z-index: 1;
+  width: 51px;
+  height: 51px;
+  border: 1px solid var(--astrra-gold);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--astrra-black);
+  color: var(--astrra-gold);
+  font: 10px/1 "DM Mono", monospace;
+}
+
+.astrra-process__step-content {
+  padding-top: 45px;
+  padding-right: 25px;
+}
+
+.astrra-process__step-index {
+  color: var(--astrra-muted);
+  font: 10px/1 "DM Mono", monospace;
+  letter-spacing: 0.12em;
+}
+
+.astrra-process__step-content h3 {
+  margin: 17px 0 15px;
+  font: 400 30px/1 "Manrope", sans-serif;
+  letter-spacing: -0.04em;
+}
+
+.astrra-process__step-content p {
+  margin: 0;
+  color: var(--astrra-muted);
+  font: 400 13px/1.7 "Manrope", sans-serif;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .astrra-about,
+  .astrra-services,
+  .astrra-expertise,
+  .astrra-process {
+    padding: 100px 0;
+  }
+
+  .astrra-about__container,
+  .astrra-services__container,
+  .astrra-expertise__container,
+  .astrra-process__container {
+    width: min(100% - 36px, 700px);
+  }
+
+  .astrra-about__grid,
+  .astrra-services__heading-grid,
+  .astrra-process__heading-grid {
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+
+  .astrra-about__statement {
+    margin-top: 80px;
+    flex-wrap: wrap;
+  }
+
+  .astrra-services__grid {
+    grid-template-columns: 1fr;
+    margin-top: 75px;
+  }
+
+  .astrra-expertise__hero {
+    margin: 75px 0;
+  }
+
+  .astrra-expertise__item {
+    grid-template-columns: 55px 1fr 35px;
+    gap: 15px;
+    padding: 25px 0;
+  }
+
+  .astrra-expertise__item p {
+    grid-column: 2 / 3;
+  }
+
+  .astrra-process__track {
+    grid-template-columns: 1fr;
+    gap: 45px;
+    margin-top: 80px;
+  }
+
+  .astrra-process__track-line {
+    top: 25px;
+    bottom: 25px;
+    left: 25px;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+
+  .astrra-process__step {
+    display: grid;
+    grid-template-columns: 51px 1fr;
+    gap: 25px;
+    padding: 0;
+  }
+
+  .astrra-process__step-content {
+    padding: 5px 0 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .astrra-about__heading h2,
+  .astrra-services__heading-grid h2,
+  .astrra-expertise__hero h2,
+  .astrra-process__heading-grid h2 {
+    font-size: clamp(46px, 15vw, 70px);
+  }
+
+  .astrra-about__facts {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .astrra-services__card {
+    min-height: 300px;
+    padding: 24px;
+  }
+
+  .astrra-expertise__top {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .astrra-expertise__item {
+    grid-template-columns: 45px 1fr 25px;
+  }
+
+  .astrra-expertise__item p {
+    grid-column: 2 / 3;
+  }
+
+  .astrra-process__step-content h3 {
+    font-size: 26px;
+  }
+}
