@@ -1,16 +1,16 @@
-import { gsap, EASE, reducedMotion } from "./animationConfig";
+import { gsap, EASE, ScrollTrigger, reducedMotion } from "./animationConfig";
 
 /**
  * Hero Load Reveal — Post-Intro State:
  * Both the white 3D AstraTech logo and the black information box are IMMEDIATELY 100% visible
- * on initial page load as soon as the intro curtain finishes. Zero scroll required for initial visibility.
+ * on initial page load at top: 0 as soon as the intro curtain finishes. Zero scroll required.
  */
 export function heroIntro(hero, options = {}) {
   const { onStart } = options;
 
   if (!hero) return null;
 
-  // Immediately make all hero elements 100% visible and sharp
+  // Immediately set all hero elements 100% visible and sharp
   gsap.set(hero.querySelectorAll("[data-hero-line] span"), { yPercent: 0 });
   gsap.set(
     hero.querySelectorAll(
@@ -28,14 +28,14 @@ export function heroIntro(hero, options = {}) {
 
   tl.to(hero.querySelectorAll("[data-hero-3d-logo], [data-hero-black-box]"), {
     autoAlpha: 1,
-    duration: 0.3,
+    duration: 0.2,
   });
 
   return tl;
 }
 
 /**
- * Ensure hero elements are visible immediately on mount (no hidden black gaps).
+ * Ensure hero elements are visible immediately on mount.
  */
 export function prehideHero(hero) {
   if (!hero) return;
@@ -51,14 +51,13 @@ export function prehideHero(hero) {
 /**
  * Hero Scroll Alignment Interaction:
  * 1. Initial State (Page Load / Scroll = 0):
- *    - White 3D Logo is UP (y: 0), 100% visible inside the viewport.
- *    - Black Information Box is SLIGHTLY LOWER (y: 110px), 100% visible inside the same initial viewport.
+ *    - Hero sits at top: 0 inside the initial viewport.
+ *    - White 3D Logo is UP (y: 0), 100% visible.
+ *    - Black Information Box is SLIGHTLY LOWER (y: 110px), 100% visible in the same viewport.
  * 2. On Scroll:
- *    - Hero stays pinned for +50vh distance.
- *    - Black Box travels UP from 110px to 0px while 3D Logo stays anchored in place.
- * 3. Final Alignment & Pin Release:
- *    - Once Black Box reaches y: 0 (aligned horizontally with 3D Logo), the hero unpins cleanly
- *      and normal document scrolling resumes so the rest of the website scrolls down naturally.
+ *    - As user scrolls down through the hero section (0 to 400px), Black Box travels UP to y: 0.
+ * 3. Final Alignment:
+ *    - When Black Box aligns horizontally with 3D Logo (y: 0), normal page scrolling continues naturally.
  */
 export function heroScrollAlignment(hero) {
   if (!hero) return null;
@@ -78,11 +77,8 @@ export function heroScrollAlignment(hero) {
     scrollTrigger: {
       trigger: hero,
       start: "top top",
-      end: "+=50vh",
-      pin: true,
-      pinSpacing: true,
-      scrub: 0.7,
-      anticipatePin: 1,
+      end: "top+=400 top",
+      scrub: 0.6,
     },
   });
 
