@@ -265,10 +265,9 @@
 }
 
 .brand__logo-img {
-  height: clamp(40px, 4.8vw, 56px);
+  height: 34px;
   width: auto;
   object-fit: contain;
-  aspect-ratio: auto;
   filter: brightness(0) invert(1);
   transition: transform 0.3s ease;
 }
