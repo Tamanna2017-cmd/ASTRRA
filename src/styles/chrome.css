@@ -200,31 +200,38 @@
   margin-top: 48px;
 }
 
-/* ---------- Preloader ---------- */
+/* ---------- Preloader / Intro Overlay ---------- */
 .preloader {
   position: fixed;
   inset: 0;
-  z-index: 200;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 28px;
   background: var(--bg);
+  overflow: hidden;
+  touch-action: none;
+  pointer-events: all;
 }
 
 .preloader__brand-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  text-align: center;
+  justify-content: center;
+  padding: 24px;
 }
 
 .preloader__logo-img {
-  height: clamp(38px, 6vw, 68px);
-  width: auto;
+  width: clamp(140px, 22vw, 280px);
+  height: auto;
+  max-width: 80vw;
   object-fit: contain;
+  aspect-ratio: auto;
   filter: brightness(0) invert(1);
 }
 

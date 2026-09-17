@@ -14,17 +14,17 @@ export default function Preloader({ onDone }) {
   useEffect(() => {
     document.body.classList.add("is-loading");
 
-    const finish = () => {
+    const handleRevealStart = () => {
       document.body.classList.remove("is-loading");
       onDone && onDone();
-      if (reducedMotion()) {
-        setHidden(true);
-      } else {
-        window.setTimeout(() => setHidden(true), 900);
-      }
+    };
+
+    const finish = () => {
+      setHidden(true);
     };
 
     if (reducedMotion()) {
+      handleRevealStart();
       finish();
       return;
     }
@@ -32,6 +32,7 @@ export default function Preloader({ onDone }) {
     const tl = createPreloader({
       root: rootRef.current,
       brand: brandRef.current,
+      onRevealStart: handleRevealStart,
       onComplete: finish,
     });
 

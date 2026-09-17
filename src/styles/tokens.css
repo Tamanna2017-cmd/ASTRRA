@@ -86,9 +86,15 @@ body {
   z-index: 1;
 }
 
-body.menu-open,
-body.is-loading {
+body.menu-open {
   overflow: hidden;
+}
+
+body.is-loading {
+  overflow: hidden !important;
+  height: 100vh !important;
+  touch-action: none !important;
+  user-select: none;
 }
 
 img {
