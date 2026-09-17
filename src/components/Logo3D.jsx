@@ -4,8 +4,9 @@ import { reducedMotion } from "../animations/animationConfig";
 
 /**
  * 3D AstraTech Company Logo (Three.js WebGL)
- * Features the authentic company logo texture with 3D depth, metallic gold/white specular lighting,
- * slow continuous vertical rotation, and smooth mouse tilt interaction.
+ * Pure white high-contrast 3D brand logo.
+ * NO background card, box, or ring attached behind the logo.
+ * Features slow continuous Y-axis rotation and subtle mouse tilt physics.
  */
 export default function Logo3D() {
   const mountRef = useRef(null);
@@ -21,7 +22,7 @@ export default function Logo3D() {
     // Scene, Camera, Renderer
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.z = 5.2;
+    camera.position.z = 5.0;
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -32,23 +33,19 @@ export default function Logo3D() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     mountNode.appendChild(renderer.domElement);
 
-    // Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    // High Contrast Pure White Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 2.2);
     scene.add(ambientLight);
 
-    const goldDirectional = new THREE.DirectionalLight(0xddc084, 3.0);
-    goldDirectional.position.set(5, 5, 6);
-    scene.add(goldDirectional);
+    const mainLight = new THREE.DirectionalLight(0xffffff, 3.0);
+    mainLight.position.set(5, 5, 7);
+    scene.add(mainLight);
 
-    const fillLight = new THREE.DirectionalLight(0xffffff, 1.5);
-    fillLight.position.set(-5, -3, 4);
+    const fillLight = new THREE.DirectionalLight(0xffffff, 1.8);
+    fillLight.position.set(-5, -3, 5);
     scene.add(fillLight);
 
-    const backGlow = new THREE.PointLight(0xc8a96b, 3.5, 10);
-    backGlow.position.set(0, 0, -1);
-    scene.add(backGlow);
-
-    // Group for 3D Logo Mesh
+    // Group for 3D Logo Mesh ONLY (No background shapes)
     const logoGroup = new THREE.Group();
     scene.add(logoGroup);
 
@@ -59,47 +56,35 @@ export default function Logo3D() {
       texture.minFilter = THREE.LinearFilter;
       texture.magFilter = THREE.LinearFilter;
 
-      // Aspect ratio of texture image
+      // Aspect ratio of logo image
       const imageAspect = texture.image.width / texture.image.height || 3.5;
       const planeWidth = 3.6;
       const planeHeight = planeWidth / imageAspect;
 
-      // Front Logo Plane Material
+      // Pure White High Contrast Logo Material
       const logoMaterial = new THREE.MeshStandardMaterial({
         map: texture,
         transparent: true,
-        roughness: 0.25,
-        metalness: 0.75,
-        emissive: 0x221a0f,
-        emissiveIntensity: 0.3,
+        alphaTest: 0.05,
+        color: 0xffffff,
+        roughness: 0.15,
+        metalness: 0.1,
+        emissive: 0xffffff,
+        emissiveIntensity: 0.25,
         side: THREE.DoubleSide,
       });
 
-      const geometry = new THREE.PlaneGeometry(planeWidth, planeHeight, 32, 32);
+      const geometry = new THREE.PlaneGeometry(planeWidth, planeHeight, 16, 16);
+
+      // Front 3D Layer
       const frontMesh = new THREE.Mesh(geometry, logoMaterial);
       logoGroup.add(frontMesh);
 
-      // Back-to-back 3D depth layer
+      // Back 3D Layer (subtle depth thickness)
       const backMesh = new THREE.Mesh(geometry, logoMaterial);
-      backMesh.position.z = -0.06;
+      backMesh.position.z = -0.05;
       backMesh.rotation.y = Math.PI;
       logoGroup.add(backMesh);
-
-      // Outer glowing rim ring
-      const ringGeometry = new THREE.RingGeometry(
-        planeWidth * 0.58,
-        planeWidth * 0.6,
-        64
-      );
-      const ringMaterial = new THREE.MeshBasicMaterial({
-        color: 0xc8a96b,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.25,
-      });
-      const ringMesh = new THREE.Mesh(ringGeometry, ringMaterial);
-      ringMesh.position.z = -0.03;
-      logoGroup.add(ringMesh);
     });
 
     // Mouse tilt variables
@@ -112,8 +97,8 @@ export default function Logo3D() {
       const rect = mountNode.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
-      targetMouseX = x * 0.4;
-      targetMouseY = y * 0.4;
+      targetMouseX = x * 0.35;
+      targetMouseY = y * 0.35;
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
@@ -134,10 +119,10 @@ export default function Logo3D() {
         currentMouseY += (targetMouseY - currentMouseY) * 0.05;
 
         logoGroup.rotation.x = currentMouseY;
-        logoGroup.rotation.z = -currentMouseX * 0.5;
+        logoGroup.rotation.z = -currentMouseX * 0.4;
 
-        // Gentle vertical floating pulse
-        logoGroup.position.y = Math.sin(Date.now() * 0.0015) * 0.08;
+        // Gentle floating pulse
+        logoGroup.position.y = Math.sin(Date.now() * 0.0015) * 0.06;
       }
 
       renderer.render(scene, camera);
