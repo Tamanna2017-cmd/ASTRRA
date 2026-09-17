@@ -1,18 +1,17 @@
-import { gsap, EASE, reducedMotion } from "./animationConfig";
+import { gsap, EASE, reducedMotion, ScrollTrigger } from "./animationConfig";
 
 /**
  * Hero load sequence — runs once after the preloader completes.
- * Staggered, editorial, controlled: label -> headline lines ->
- * supporting copy -> CTAs -> meta elements.
- * Elements are pre-hidden on mount (see Hero.jsx) so nothing flashes.
+ * Reveals 3D logo canvas, split-column layout, and dark info card elements.
  */
 export function heroIntro(hero, options = {}) {
   const { onStart } = options;
 
-  if (reducedMotion()) {
-    gsap.set(hero.querySelectorAll("[data-hero-line] span"), { yPercent: 0 });
+  if (reducedMotion() || !hero) {
     gsap.set(
-      hero.querySelectorAll("[data-hero-label], [data-hero-logo], [data-hero-copy], [data-hero-cta], [data-hero-meta]"),
+      hero.querySelectorAll(
+        "[data-hero-3d], [data-hero-card], [data-hero-label], [data-hero-copy], [data-hero-cta], [data-hero-meta]"
+      ),
       { autoAlpha: 1, y: 0 }
     );
     return null;
@@ -24,78 +23,76 @@ export function heroIntro(hero, options = {}) {
   });
 
   tl.fromTo(
-    "[data-hero-label]",
-    { autoAlpha: 0, y: 18 },
-    { autoAlpha: 1, y: 0, duration: 0.9 },
+    "[data-hero-3d]",
+    { autoAlpha: 0, scale: 0.92 },
+    { autoAlpha: 1, scale: 1, duration: 1.2 },
     0
   )
     .fromTo(
-      "[data-hero-line] span",
-      { yPercent: 115 },
-      { yPercent: 0, duration: 1.35, stagger: 0.11 },
-      0.12
-    )
-    .fromTo(
-      "[data-hero-logo]",
-      { autoAlpha: 0, y: 24, scale: 0.96 },
-      { autoAlpha: 1, y: 0, scale: 1, duration: 1.1 },
-      0.45
-    )
-    .fromTo(
-      "[data-hero-copy]",
-      { autoAlpha: 0, y: 26 },
-      { autoAlpha: 1, y: 0, duration: 1 },
-      0.62
-    )
-    .fromTo(
-      "[data-hero-cta]",
-      { autoAlpha: 0, y: 22 },
-      { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.09 },
-      0.74
+      "[data-hero-card]",
+      { autoAlpha: 0, y: 40 },
+      { autoAlpha: 1, y: 0, duration: 1.1 },
+      0.18
     )
     .fromTo(
       "[data-hero-meta]",
       { autoAlpha: 0 },
-      { autoAlpha: 1, duration: 1.1, stagger: 0.07 },
-      0.85
+      { autoAlpha: 1, duration: 0.9, stagger: 0.08 },
+      0.45
     );
 
   return tl;
 }
 
 /**
- * Pre-hide the hero's animated elements as soon as it mounts (preloader
- * still covers the screen) so the intro reveals from a clean slate
- * with no flash of unstyled content.
+ * Pre-hide the hero's animated elements as soon as it mounts so the intro
+ * reveals from a clean slate with no flash of unstyled content.
  */
 export function prehideHero(hero) {
-  if (reducedMotion()) return;
-  gsap.set(hero.querySelectorAll("[data-hero-line] span"), { yPercent: 115 });
+  if (reducedMotion() || !hero) return;
   gsap.set(
-    hero.querySelectorAll("[data-hero-label], [data-hero-logo], [data-hero-copy], [data-hero-cta], [data-hero-meta]"),
+    hero.querySelectorAll(
+      "[data-hero-3d], [data-hero-card], [data-hero-meta]"
+    ),
     { autoAlpha: 0 }
   );
 }
 
 /**
- * Subtle hero parallax on scroll: headline drifts up slightly while the
- * decorative glow recedes — keeps the opening alive without excess.
+ * Pinned Scroll Interaction:
+ * - Pins the split composition for a controlled scroll distance (~90vh).
+ * - As user scrolls, the Black Information Card moves upward from an offset state (y: 130px)
+ *   to align side-by-side with the 3D logo.
+ * - Updates the 3D logo rotation in sync with scroll progress.
+ * - Releases cleanly so normal page scrolling continues into the next section.
  */
-export function heroScrollDrift(hero) {
-  if (reducedMotion()) return null;
+export function heroPinnedScroll(hero, onProgressUpdate) {
+  if (reducedMotion() || !hero) return null;
+
+  const pinWrapper = hero.querySelector("[data-hero-pinned]");
+  const infoCard = hero.querySelector("[data-hero-card]");
+
+  if (!pinWrapper || !infoCard) return null;
 
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: hero,
       start: "top top",
-      end: "bottom top",
-      scrub: true,
+      end: "+=90vh",
+      pin: pinWrapper,
+      scrub: 1,
+      anticipatePin: 1,
+      onUpdate: (self) => {
+        onProgressUpdate && onProgressUpdate(self.progress);
+      },
     },
   });
 
-  tl.to("[data-hero-content]", { y: -70, ease: "none" }, 0).to(
-    "[data-hero-glow]",
-    { y: 110, ease: "none" },
+  // Black Info Card moves upward from offset to perfect alignment with 3D logo
+  tl.fromTo(
+    infoCard,
+    { y: 130 },
+    { y: 0, ease: "none" },
     0
   );
 
