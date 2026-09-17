@@ -22,7 +22,7 @@ const expertise = [
   {
     number: "05",
     title: "Motion & Interaction",
-    text: "Purposeful movement and interaction that give digital products character.",
+    text: "Purposeful movement that gives digital products character.",
   },
   {
     number: "06",
@@ -43,43 +43,38 @@ const expertise = [
 
 const Expertise = () => {
   return (
-    <section id="expertise" className="astrra-expertise" data-section="expertise">
-      <div className="astrra-expertise__container">
-        <div className="astrra-expertise__top" data-animate="heading">
-          <div className="astrra-expertise__eyebrow">
-            <span className="astrra-expertise__eyebrow-line" />
-            <span>03 / EXPERTISE</span>
-          </div>
-
-          <p>
+    <section id="expertise" className="expertise section">
+      <div className="container">
+        <div className="expertise__top">
+          <p className="eyebrow eyebrow--gold" data-reveal>
+            03 / EXPERTISE
+          </p>
+          <p data-reveal>
             The thinking, design and technology behind the work.
           </p>
         </div>
 
-        <div className="astrra-expertise__hero">
-          <h2 data-animate="heading">
-            Built where
-            <br />
-            <em>ideas</em> meet
-            <br />
-            technology.
-          </h2>
-        </div>
+        <h2 className="expertise__heading">
+          <span data-line data-reveal>
+            <span data-line-inner>Built where</span>
+          </span>
+          <span data-line data-reveal>
+            <span data-line-inner>
+              <em>ideas</em> meet
+            </span>
+          </span>
+          <span data-line data-reveal>
+            <span data-line-inner>technology.</span>
+          </span>
+        </h2>
 
-        <div className="astrra-expertise__list" data-animate="list">
+        <div className="expertise__list" data-reveal-stagger>
           {expertise.map((item) => (
-            <article
-              className="astrra-expertise__item"
-              key={item.number}
-              data-animate="expertise-item"
-            >
-              <span className="astrra-expertise__number">{item.number}</span>
-
+            <article className="expertise__item" key={item.number}>
+              <span className="num">{item.number}</span>
               <h3>{item.title}</h3>
-
               <p>{item.text}</p>
-
-              <span className="astrra-expertise__plus" aria-hidden="true">
+              <span className="expertise__plus" aria-hidden="true">
                 +
               </span>
             </article>

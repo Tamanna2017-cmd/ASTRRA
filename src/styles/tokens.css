@@ -1,0 +1,464 @@
+/* =========================================================
+   ASTRRA TECH — DESIGN TOKENS + RESET + PRIMITIVES
+   Editorial black/white system, gold as controlled accent.
+   ========================================================= */
+
+:root {
+  /* Color */
+  --bg: #050505;
+  --bg-soft: #0c0c0b;
+  --bg-raised: #131311;
+  --ink: #f4f3ef;
+  --ink-dim: #b9b8b0;
+  --muted: #96958d;
+  --muted-deep: #6d6c65;
+  --gold: #c8a96b;
+  --gold-bright: #ddc084;
+  --gold-deep: #8a6f3c;
+  --paper: #f4f3ef;
+  --paper-ink: #0a0a09;
+
+  /* Borders */
+  --line: rgba(244, 243, 239, 0.14);
+  --line-soft: rgba(244, 243, 239, 0.08);
+  --line-dark: rgba(10, 10, 9, 0.14);
+  --line-dark-soft: rgba(10, 10, 9, 0.08);
+
+  /* Type */
+  --font-display: "Manrope", system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, monospace;
+
+  /* Layout */
+  --gutter: clamp(20px, 4vw, 56px);
+  --content: min(1440px, 100% - var(--gutter) * 2);
+  --section-y: clamp(96px, 12vw, 190px);
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.app {
+  position: relative;
+  isolation: isolate;
+}
+
+.app > *:not(.fixed-background) {
+  position: relative;
+  z-index: 1;
+}
+
+body.menu-open,
+body.is-loading {
+  overflow: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--bg);
+}
+
+:focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* ---------- Layout primitives ---------- */
+.container {
+  width: var(--content);
+  margin-inline: auto;
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+}
+
+/* ---------- Type primitives ---------- */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.eyebrow--gold {
+  color: var(--gold);
+}
+
+.display-xl {
+  font-weight: 600;
+  font-size: clamp(56px, 9.6vw, 150px);
+  line-height: 0.88;
+  letter-spacing: -0.055em;
+}
+
+.display-lg {
+  font-weight: 600;
+  font-size: clamp(42px, 6.4vw, 96px);
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+
+.display-md {
+  font-weight: 600;
+  font-size: clamp(30px, 4vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.lead {
+  color: var(--muted);
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.75;
+}
+
+.body-sm {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.mono-xs {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Masked line reveal scaffolding (GSAP animates the inner span) */
+[data-line] {
+  display: block;
+  overflow: hidden;
+}
+
+[data-line-inner] {
+  display: block;
+  will-change: transform;
+}
+
+.no-motion [data-line-inner] {
+  transform: none !important;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 52px;
+  padding: 0 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  transition: color 0.35s var(--ease), border-color 0.35s var(--ease);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Fill wipe from bottom */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.45s var(--ease);
+  z-index: -1;
+}
+
+.btn > * {
+  position: relative;
+  z-index: 1;
+}
+
+.btn:hover::before {
+  transform: scaleY(1);
+}
+
+.btn:hover {
+  color: var(--bg);
+}
+
+.btn--gold {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--bg);
+}
+
+.btn--gold::before {
+  background: var(--ink);
+}
+
+.btn--gold:hover {
+  color: var(--paper-ink);
+  border-color: var(--ink);
+}
+
+.btn .btn__arrow {
+  font-size: 14px;
+  line-height: 0;
+  transition: transform 0.35s var(--ease);
+}
+
+.btn:hover .btn__arrow {
+  transform: translate(3px, -3px);
+}
+
+/* Quiet text link with underline draw */
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.3s ease;
+}
+
+.text-link::after {
+  content: "";
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease);
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+}
+
+.text-link {
+  position: relative;
+}
+
+.text-link:hover {
+  color: var(--gold-bright);
+}
+
+.text-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ---------- Section head ---------- */
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.section-head--dark {
+  border-bottom-color: var(--line-dark);
+}
+
+.section-head .eyebrow {
+  color: var(--gold);
+}
+
+.section-head__count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-deep);
+}
+
+.section-title {
+  margin-top: clamp(48px, 7vw, 96px);
+}
+
+/* ---------- Custom cursor ---------- */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  pointer-events: none;
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cursor-dot {
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold-bright);
+  }
+
+  .cursor-ring {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(221, 192, 132, 0.55);
+    border-radius: 50%;
+    transition: width 0.3s var(--ease), height 0.3s var(--ease),
+      background 0.3s ease;
+  }
+
+  body.cursor-hover .cursor-ring {
+    width: 58px;
+    height: 58px;
+    background: rgba(200, 169, 107, 0.07);
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* =========================================================
+   ASTRRA CINEMATIC BACKGROUND
+   ========================================================= */
+
+.fixed-background {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+  background: #050505;
+}
+
+.fixed-background img {
+  position: absolute;
+  width: 110%;
+  height: 110%;
+  left: -5%;
+  top: -5%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+  will-change: transform;
+}
+
+.fixed-background__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 5, 5, 0.38);
+}
+
+.fixed-background__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    transparent 25%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+.app {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+}
+
+.app > :not(.fixed-background) {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .fixed-background img {
+    width: 125%;
+    height: 125%;
+    left: -12.5%;
+    top: -12.5%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fixed-background img {
+    transform: none !important;
+  }
+}

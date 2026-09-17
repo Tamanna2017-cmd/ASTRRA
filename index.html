@@ -1,183 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#050505" />
-  <title>ASTRRA TECH — Make Your Space Digitally.</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050505" />
+    <meta
+      name="description"
+      content="ASTRRA TECH — Make Your Space Digitally. A digital technology studio crafting premium websites, products and experiences."
+    />
+    <title>ASTRRA TECH — Make Your Space Digitally.</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-
-<body>
-  <div class="cursor-dot"></div>
-  <div class="cursor-ring"></div>
-
-  <!-- NAVBAR -->
-  <header class="navbar" id="navbar">
-    <a href="#home" class="brand" aria-label="ASTRRA TECH home">
-      <span class="brand-main">ASTRRA</span>
-      <span class="brand-tech">TECH</span>
-    </a>
-
-    <nav class="desktop-nav" aria-label="Primary navigation">
-      <a href="#services">Services</a>
-      <a href="#work">Work</a>
-      <a href="#process">Process</a>
-      <a href="#about">About</a>
-    </nav>
-
-    <a href="#contact" class="nav-cta magnetic">
-      <span>Start a Project</span>
-      <span class="arrow">↗</span>
-    </a>
-
-    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
-      <span></span>
-      <span></span>
-    </button>
-  </header>
-
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-inner">
-      <p class="eyebrow">ASTRRA TECH / NAVIGATION</p>
-      <a href="#services">Services <span>↗</span></a>
-      <a href="#work">Work <span>↗</span></a>
-      <a href="#process">Process <span>↗</span></a>
-      <a href="#about">About <span>↗</span></a>
-      <a href="#contact" class="mobile-cta">Start a Project <span>↗</span></a>
-    </div>
-  </div>
-
-  <main id="home">
-
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-grid"></div>
-      <div class="hero-glow"></div>
-
-      <div class="hero-topline">
-        <span>ASTRRA TECH / DIGITAL STUDIO</span>
-        <span class="availability">
-          <i></i> BUILDING DIGITAL SPACES
-        </span>
-      </div>
-
-      <div class="hero-content">
-        <p class="eyebrow hero-eyebrow reveal">DIGITAL TECHNOLOGY / 01</p>
-
-        <h1 class="hero-title">
-          <span class="line reveal">MAKE YOUR</span>
-          <span class="line reveal delay-1">SPACE <em>DIGITALLY.</em></span>
-        </h1>
-
-        <div class="hero-bottom">
-          <div class="hero-copy reveal delay-2">
-            <p>
-              We transform ideas, businesses and traditional spaces
-              into refined digital experiences built to move forward.
-            </p>
-          </div>
-
-          <div class="hero-actions reveal delay-3">
-            <a href="#contact" class="button button-gold magnetic">
-              <span>Start Your Project</span>
-              <span>↗</span>
-            </a>
-            <a href="#services" class="text-link">
-              Explore Services <span>↓</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-index">
-        <span>SCROLL TO EXPLORE</span>
-        <span class="scroll-line"></span>
-      </div>
-
-      <div class="hero-corner hero-corner-left">A / T</div>
-      <div class="hero-corner hero-corner-right">EST. 2026</div>
-    </section>
-
-    <!-- DESIGN-SYSTEM PREVIEW / PLACEHOLDER -->
-    <section class="intro-section" id="about">
-      <div class="container">
-        <div class="section-label">
-          <span>02</span>
-          <span>WHAT WE DO</span>
-        </div>
-
-        <div class="intro-layout">
-          <h2>
-            Digital presence,
-            <span>reimagined.</span>
-          </h2>
-          <p>
-            ASTRRA TECH creates digital products and experiences for
-            businesses ready to build a stronger space online.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="dark-placeholder" id="services">
-      <div class="container placeholder-grid">
-        <div>
-          <p class="eyebrow">03 / SERVICES</p>
-          <h2>Built around<br><span>your space.</span></h2>
-        </div>
-        <div class="service-list">
-          <div>01 <span>Website Development</span><b>↗</b></div>
-          <div>02 <span>UI / UX Design</span><b>↗</b></div>
-          <div>03 <span>Web Applications</span><b>↗</b></div>
-          <div>04 <span>Mobile Applications</span><b>↗</b></div>
-          <div>05 <span>SEO / Digital Growth</span><b>↗</b></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="white-placeholder" id="work">
-      <div class="container">
-        <p class="eyebrow dark-text">04 / SELECTED WORK</p>
-        <h2>Work that gives<br><span>ideas a space.</span></h2>
-      </div>
-    </section>
-
-    <section class="dark-placeholder process-section" id="process">
-      <div class="container">
-        <p class="eyebrow">05 / PROCESS</p>
-        <h2>Discover → Design →<br><span>Develop → Launch.</span></h2>
-      </div>
-    </section>
-
-    <section class="contact-placeholder" id="contact">
-      <div class="container contact-inner">
-        <p class="eyebrow dark-text">06 / LET'S WORK TOGETHER</p>
-        <h2>START YOUR<br><span>PROJECT.</span></h2>
-        <a href="mailto:hello@astrratech.com" class="button button-dark">
-          hello@astrratech.com <span>↗</span>
-        </a>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-inner">
-      <div class="brand footer-brand">
-        <span class="brand-main">ASTRRA</span>
-        <span class="brand-tech">TECH</span>
-      </div>
-      <p>Make Your Space Digitally.</p>
-      <span>© 2026 ASTRRA TECH</span>
-    </div>
-  </footer>
-
-  <script src="js/script.js"></script>
-</body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

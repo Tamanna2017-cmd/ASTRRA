@@ -1,3 +1,6 @@
+import { useLayoutEffect, useRef } from "react";
+import { gsap, ScrollTrigger, reducedMotion } from "../animations/animationConfig";
+
 const services = [
   {
     number: "01",
@@ -44,52 +47,270 @@ const services = [
 ];
 
 const Services = () => {
-  return (
-    <section id="services" className="astrra-services" data-section="services">
-      <div className="astrra-services__container">
-        <div className="astrra-services__header" data-animate="heading">
-          <div className="astrra-services__eyebrow">
-            <span className="astrra-services__eyebrow-line" />
-            <span>02 / SERVICES</span>
-          </div>
+  const sectionRef = useRef(null);
 
-          <div className="astrra-services__heading-grid">
-            <h2>
-              What we
-              <br />
-              <em>create.</em>
-            </h2>
-            <p>
-              From first concept to final product, we bring together the
-              disciplines needed to make digital work feel exceptional.
-            </p>
-          </div>
+  useLayoutEffect(() => {
+    const section = sectionRef.current;
+
+    if (!section || reducedMotion()) return;
+
+    const rows = section.querySelectorAll(".service-row");
+    const heading = section.querySelector(".services__heading-grid h2");
+    const description = section.querySelector(".services__heading-grid p");
+    const eyebrow = section.querySelector(".section-head .eyebrow");
+    const count = section.querySelector(".section-head__count");
+
+    const ctx = gsap.context(() => {
+      /* ---------------------------------------------
+         HEADER
+      --------------------------------------------- */
+
+      gsap.fromTo(
+        [eyebrow, count],
+        {
+          autoAlpha: 0,
+          y: 20,
+        },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.9,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 82%",
+            once: true,
+          },
+        }
+      );
+
+      /* ---------------------------------------------
+         MAIN HEADING
+      --------------------------------------------- */
+
+      gsap.fromTo(
+        heading,
+        {
+          autoAlpha: 0,
+          y: 80,
+        },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 1.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: heading,
+            start: "top 84%",
+            once: true,
+          },
+        }
+      );
+
+      /* ---------------------------------------------
+         HEADING PARAGRAPH
+      --------------------------------------------- */
+
+      gsap.fromTo(
+        description,
+        {
+          autoAlpha: 0,
+          y: 45,
+        },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 1,
+          delay: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: description,
+            start: "top 86%",
+            once: true,
+          },
+        }
+      );
+
+      /* ---------------------------------------------
+         SERVICE ROWS
+         Each row enters sequentially.
+      --------------------------------------------- */
+
+      gsap.fromTo(
+        rows,
+        {
+          autoAlpha: 0,
+          y: 55,
+        },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 1,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: rows[0],
+            start: "top 88%",
+            once: true,
+          },
+        }
+      );
+
+      /* ---------------------------------------------
+         ROW SCROLL DRIFT
+         Subtle movement while scrolling.
+      --------------------------------------------- */
+
+      rows.forEach((row, index) => {
+        const title = row.querySelector(".service-row__title");
+        const number = row.querySelector(".service-row__num");
+        const tag = row.querySelector(".service-row__tag");
+        const arrow = row.querySelector(".service-row__arrow");
+
+        gsap.fromTo(
+          title,
+          {
+            x: index % 2 === 0 ? -18 : 18,
+          },
+          {
+            x: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: row,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.2,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+
+        gsap.fromTo(
+          number,
+          {
+            x: -10,
+          },
+          {
+            x: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: row,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.5,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+
+        gsap.fromTo(
+          tag,
+          {
+            x: 12,
+          },
+          {
+            x: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: row,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.5,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+
+        /* ---------------------------------------------
+           ARROW SCROLL ROTATION / DRIFT
+        --------------------------------------------- */
+
+        gsap.fromTo(
+          arrow,
+          {
+            rotation: -12,
+          },
+          {
+            rotation: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: row,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1,
+            },
+          }
+        );
+      });
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section
+      id="services"
+      className="services section"
+      ref={sectionRef}
+    >
+      <div className="container">
+        <header className="section-head">
+          <p className="eyebrow">
+            02 / SERVICES
+          </p>
+
+          <span className="section-head__count">
+            06 DISCIPLINES
+          </span>
+        </header>
+
+        <div className="services__heading-grid">
+          <h2>
+            <span data-line>
+              <span data-line-inner>
+                What we <em>create.</em>
+              </span>
+            </span>
+          </h2>
+
+          <p>
+            From first concept to final product, we bring together the
+            disciplines needed to make digital work feel exceptional.
+          </p>
         </div>
 
-        <div className="astrra-services__grid">
+        <div className="services__list">
           {services.map((service) => (
-            <article
-              className="astrra-services__card"
+            <a
+              className="service-row"
               key={service.number}
-              data-animate="service-card"
+              href="#contact"
+              aria-label={`${service.title} — start a conversation`}
             >
-              <div className="astrra-services__card-top">
-                <span>{service.number}</span>
-                <span>{service.tag}</span>
-              </div>
+              <span className="service-row__num">
+                {service.number}
+              </span>
 
-              <div className="astrra-services__card-content">
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
-              </div>
+              <h3 className="service-row__title">
+                {service.title}
+              </h3>
 
-              <div className="astrra-services__card-bottom">
-                <span className="astrra-services__card-line" />
-                <span className="astrra-services__card-arrow" aria-hidden="true">
-                  ↗
-                </span>
-              </div>
-            </article>
+              <span className="service-row__desc">
+                {service.description}
+              </span>
+
+              <span className="service-row__tag">
+                {service.tag}
+              </span>
+
+              <span
+                className="service-row__arrow"
+                aria-hidden="true"
+              >
+                ↗
+              </span>
+            </a>
           ))}
         </div>
       </div>

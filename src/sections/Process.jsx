@@ -1,3 +1,6 @@
+import React, { useEffect, useRef } from "react";
+import { gsap, ScrollTrigger, reducedMotion } from "../animations/animationConfig";
+
 const steps = [
   {
     number: "01",
@@ -32,50 +35,99 @@ const steps = [
 ];
 
 const Process = () => {
-  return (
-    <section id="process" className="astrra-process" data-section="process">
-      <div className="astrra-process__container">
-        <div className="astrra-process__header" data-animate="heading">
-          <div className="astrra-process__eyebrow">
-            <span className="astrra-process__eyebrow-line" />
-            <span>04 / HOW WE WORK</span>
-          </div>
+  const trackRef = useRef(null);
 
-          <div className="astrra-process__heading-grid">
-            <h2>
-              From thought
-              <br />
-              to <em>form.</em>
-            </h2>
-            <p>
-              A focused process keeps ambitious ideas clear, collaborative and
-              ready for the real world.
-            </p>
-          </div>
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track || reducedMotion()) return;
+
+    const stepEls = Array.from(track.querySelectorAll(".process__step"));
+    const progress = track.querySelector(".process__progress");
+    const isMobile = window.matchMedia("(max-width: 900px)").matches;
+
+    /* Rail fills as you scroll through the steps */
+    const fill = gsap.fromTo(
+      progress,
+      isMobile ? { scaleY: 0 } : { scaleX: 0 },
+      {
+        ...(isMobile ? { scaleY: 1 } : { scaleX: 1 }),
+        ease: "none",
+        scrollTrigger: {
+          trigger: track,
+          start: "top 70%",
+          end: "bottom 55%",
+          scrub: true,
+        },
+      }
+    );
+
+    /* Each step activates when its marker crosses the middle of the viewport */
+    const triggers = stepEls.map((step) =>
+      ScrollTrigger.create({
+        trigger: step,
+        start: "top 62%",
+        end: "bottom 40%",
+        onToggle: (self) => step.classList.toggle("process__step--active", self.isActive),
+      })
+    );
+
+    return () => {
+      fill.scrollTrigger && fill.scrollTrigger.kill();
+      fill.kill();
+      triggers.forEach((t) => t.kill());
+    };
+  }, []);
+
+  return (
+    <section id="process" className="process section">
+      <div className="container">
+        <header className="section-head">
+          <p className="eyebrow" data-reveal>
+            04 / PROCESS
+          </p>
+          <span className="section-head__count" data-reveal>
+            HOW WE WORK
+          </span>
+        </header>
+
+        <div className="process__heading-grid">
+          <h2>
+            <span data-line data-reveal>
+              <span data-line-inner>
+                From thought
+              </span>
+            </span>
+            <span data-line data-reveal>
+              <span data-line-inner>
+                to <em>form.</em>
+              </span>
+            </span>
+          </h2>
+          <p data-reveal>
+            A focused process keeps ambitious ideas clear, collaborative and
+            ready for the real world.
+          </p>
         </div>
 
-        <div className="astrra-process__track">
-          <div className="astrra-process__track-line" />
+        <div className="process__track" ref={trackRef}>
+          <span className="process__rail" aria-hidden="true" />
+          <span className="process__progress" aria-hidden="true" />
 
-          {steps.map((step, index) => (
-            <article
-              className="astrra-process__step"
-              key={step.number}
-              data-animate="process-step"
-            >
-              <div className="astrra-process__marker">
-                <span>{step.number}</span>
-              </div>
-
-              <div className="astrra-process__step-content">
-                <span className="astrra-process__step-index">
-                  STEP {index + 1}
+          <div className="process__steps">
+            {steps.map((step, index) => (
+              <article
+                className={`process__step${index === 0 ? " process__step--active" : ""}`}
+                key={step.number}
+              >
+                <span className="process__marker" aria-hidden="true" />
+                <span className="process__index">
+                  STEP {index + 1} / {step.number}
                 </span>
                 <h3>{step.title}</h3>
                 <p>{step.description}</p>
-              </div>
-            </article>
-          ))}
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>
