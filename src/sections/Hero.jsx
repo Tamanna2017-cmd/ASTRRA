@@ -4,11 +4,12 @@ import Logo3D from "../components/Logo3D";
 import Magnetic from "../components/Magnetic";
 
 /**
- * Hero Composition — 3D White AstraTech Logo + Black Information Box:
- * 1. Page Load: Entire composition fits inside initial 100vh viewport immediately post-intro.
- * 2. 3D Logo (Left Zone): Pure white 3D AstraTech Logo (positioned UP, no attached background shape).
- * 3. Black Information Box (Right Zone): Dark info card containing company headline, copy & CTAs (positioned DOWN initially).
+ * Hero Composition — AstraTech 3D Logo + Black Information Box:
+ * 1. Page Load: Entire composition fits inside initial 100vh viewport.
+ * 2. 3D Logo (Left/Center): Rotating 3D AstraTech Company Logo (positioned UP).
+ * 3. Black Information Box (Right/Center): Premium dark info card containing company headline, copy & CTAs (positioned DOWN initially).
  * 4. Scroll Interaction: On scroll down, Black Box travels UP until aligning with 3D Logo, then unpins cleanly for normal page scroll.
+ * 5. Background: Dark subtle futuristic atmosphere with low opacity background image.
  */
 export default function Hero({ start = true }) {
   const heroRef = useRef(null);
@@ -36,6 +37,16 @@ export default function Hero({ start = true }) {
 
   return (
     <section className="hero" id="top" ref={heroRef}>
+      {/* Dark Subtle Decorative Background Layer */}
+      <div className="hero__bg" aria-hidden="true" data-hero-bg>
+        <img
+          src="/astrra-hero-bg.jpg"
+          alt=""
+          className="hero__bg-img"
+        />
+        <div className="hero__bg-overlay" />
+      </div>
+
       {/* Top Meta Line */}
       <div className="hero__topline" data-hero-meta>
         <span>ASTRRA TECH / DIGITAL STUDIO</span>
@@ -46,7 +57,7 @@ export default function Hero({ start = true }) {
 
       {/* Main Viewport Content Composition */}
       <div className="hero__container">
-        {/* Left / Upper Zone: Pure White 3D AstraTech Company Logo */}
+        {/* Left / Upper Zone: 3D AstraTech Company Logo */}
         <div className="hero__logo-zone" data-hero-3d-logo>
           <Logo3D />
         </div>

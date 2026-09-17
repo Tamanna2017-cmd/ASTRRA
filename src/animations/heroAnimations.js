@@ -1,101 +1,87 @@
 import { gsap, EASE, reducedMotion } from "./animationConfig";
 
 /**
- * Hero load entrance sequence — runs when preloader finishes.
- * Staggered reveal of initial elements (3D logo, black box card, headline, copy, CTAs).
+ * Hero Load Reveal — Post-Intro State:
+ * Both the white 3D AstraTech logo and the black information box are IMMEDIATELY 100% visible
+ * on initial page load as soon as the intro curtain finishes. Zero scroll required for initial visibility.
  */
 export function heroIntro(hero, options = {}) {
   const { onStart } = options;
 
-  if (reducedMotion()) {
-    gsap.set(hero.querySelectorAll("[data-hero-line] span"), { yPercent: 0 });
-    gsap.set(
-      hero.querySelectorAll("[data-hero-3d-logo], [data-hero-black-box], [data-hero-meta]"),
-      { autoAlpha: 1 }
-    );
-    return null;
-  }
+  if (!hero) return null;
+
+  // Immediately make all hero elements 100% visible and sharp
+  gsap.set(hero.querySelectorAll("[data-hero-line] span"), { yPercent: 0 });
+  gsap.set(
+    hero.querySelectorAll(
+      "[data-hero-3d-logo], [data-hero-black-box], [data-hero-meta], [data-hero-label], [data-hero-copy], [data-hero-cta]"
+    ),
+    { autoAlpha: 1, opacity: 1, visibility: "visible" }
+  );
+
+  if (reducedMotion()) return null;
 
   const tl = gsap.timeline({
     defaults: { ease: EASE.outExpo },
     onStart,
   });
 
-  tl.fromTo(
-    "[data-hero-3d-logo]",
-    { autoAlpha: 0, scale: 0.9, y: 15 },
-    { autoAlpha: 1, scale: 1, y: 0, duration: 1.1 },
-    0
-  )
-    .fromTo(
-      "[data-hero-black-box]",
-      { autoAlpha: 0, scale: 0.96 },
-      { autoAlpha: 1, scale: 1, duration: 1.1 },
-      0.15
-    )
-    .fromTo(
-      "[data-hero-line] span",
-      { yPercent: 115 },
-      { yPercent: 0, duration: 1.2, stagger: 0.1 },
-      0.25
-    )
-    .fromTo(
-      "[data-hero-copy]",
-      { autoAlpha: 0, y: 20 },
-      { autoAlpha: 1, y: 0, duration: 0.9 },
-      0.55
-    )
-    .fromTo(
-      "[data-hero-cta]",
-      { autoAlpha: 0, y: 18 },
-      { autoAlpha: 1, y: 0, duration: 0.85, stagger: 0.08 },
-      0.68
-    )
-    .fromTo(
-      "[data-hero-meta]",
-      { autoAlpha: 0 },
-      { autoAlpha: 1, duration: 1.0, stagger: 0.06 },
-      0.75
-    );
+  tl.to(hero.querySelectorAll("[data-hero-3d-logo], [data-hero-black-box]"), {
+    autoAlpha: 1,
+    duration: 0.3,
+  });
 
   return tl;
 }
 
 /**
- * Pre-hide hero elements on mount before intro triggers.
+ * Ensure hero elements are visible immediately on mount (no hidden black gaps).
  */
 export function prehideHero(hero) {
-  if (reducedMotion()) return;
-  gsap.set(hero.querySelectorAll("[data-hero-line] span"), { yPercent: 115 });
+  if (!hero) return;
+  gsap.set(hero.querySelectorAll("[data-hero-line] span"), { yPercent: 0 });
   gsap.set(
-    hero.querySelectorAll("[data-hero-3d-logo], [data-hero-black-box], [data-hero-meta]"),
-    { autoAlpha: 0 }
+    hero.querySelectorAll(
+      "[data-hero-3d-logo], [data-hero-black-box], [data-hero-meta], [data-hero-label], [data-hero-copy], [data-hero-cta]"
+    ),
+    { autoAlpha: 1, opacity: 1, visibility: "visible" }
   );
 }
 
 /**
  * Hero Scroll Alignment Interaction:
- * 1. Initial state (Scroll = 0): 3D Logo is UP (y:0), Black Box is slightly DOWN (translateY: 110px).
- * 2. On scroll: Hero stays pinned for +50vh, Black Box travels UP to y: 0, reaching exact horizontal alignment with 3D Logo.
- * 3. On alignment complete: Hero unpins naturally and normal page scrolling continues down the website.
+ * 1. Initial State (Page Load / Scroll = 0):
+ *    - White 3D Logo is UP (y: 0), 100% visible inside the viewport.
+ *    - Black Information Box is SLIGHTLY LOWER (y: 110px), 100% visible inside the same initial viewport.
+ * 2. On Scroll:
+ *    - Hero stays pinned for +50vh distance.
+ *    - Black Box travels UP from 110px to 0px while 3D Logo stays anchored in place.
+ * 3. Final Alignment & Pin Release:
+ *    - Once Black Box reaches y: 0 (aligned horizontally with 3D Logo), the hero unpins cleanly
+ *      and normal document scrolling resumes so the rest of the website scrolls down naturally.
  */
 export function heroScrollAlignment(hero) {
-  if (reducedMotion() || !hero) return null;
+  if (!hero) return null;
 
   const blackBox = hero.querySelector("[data-hero-black-box]");
   if (!blackBox) return null;
 
-  // Set initial lower offset for Black Information Box
+  if (reducedMotion()) {
+    gsap.set(blackBox, { y: 0 });
+    return null;
+  }
+
+  // Set initial slightly lower position for Black Information Box
   gsap.set(blackBox, { y: 110 });
 
   const timeline = gsap.timeline({
     scrollTrigger: {
       trigger: hero,
       start: "top top",
-      end: "+=55vh",
+      end: "+=50vh",
       pin: true,
       pinSpacing: true,
-      scrub: 0.8,
+      scrub: 0.7,
       anticipatePin: 1,
     },
   });
