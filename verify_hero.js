@@ -9,10 +9,10 @@ async function capture() {
   const page = await browser.newPage();
   await page.setViewport({ width: 1440, height: 900 });
 
-  console.log("Navigating to http://localhost:5175 ...");
-  await page.goto("http://localhost:5175", { waitUntil: "domcontentloaded" });
+  console.log("Navigating to http://localhost:5173 ...");
+  await page.goto("http://localhost:5173", { waitUntil: "domcontentloaded" });
 
-  console.log("Waiting 3.5s for preloader curtain to finish...");
+  console.log("Waiting 3.5s for intro curtain to finish...");
   await new Promise((r) => setTimeout(r, 3500));
 
   const bounds = await page.evaluate(() => {
@@ -24,9 +24,9 @@ async function capture() {
 
   console.log("Hero Position:", bounds);
 
-  const screenshotPath = "C:/Users/taman/.gemini/antigravity/brain/6ae10a05-99b1-4679-bff1-db48842e05c3/hero_verified_final.png";
+  const screenshotPath = "C:/Users/taman/.gemini/antigravity/brain/6ae10a05-99b1-4679-bff1-db48842e05c3/hero_decoupled_final.png";
   await page.screenshot({ path: screenshotPath });
-  console.log("Screenshot saved to:", screenshotPath);
+  console.log("Screenshot saved successfully to:", screenshotPath);
 
   await browser.close();
 }

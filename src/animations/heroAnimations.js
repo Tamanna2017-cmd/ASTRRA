@@ -3,14 +3,14 @@ import { gsap, EASE, ScrollTrigger, reducedMotion } from "./animationConfig";
 /**
  * Hero Load Reveal — Post-Intro State:
  * Both the white 3D AstraTech logo and the black information box are IMMEDIATELY 100% visible
- * on initial page load at top: 0 as soon as the intro curtain finishes. Zero scroll required.
+ * on initial page load as soon as the intro curtain finishes. Zero scroll required for initial visibility.
  */
 export function heroIntro(hero, options = {}) {
   const { onStart } = options;
 
   if (!hero) return null;
 
-  // Immediately set all hero elements 100% visible and sharp
+  // Set all hero elements 100% visible immediately post-intro
   gsap.set(hero.querySelectorAll("[data-hero-line] span"), { yPercent: 0 });
   gsap.set(
     hero.querySelectorAll(
@@ -49,15 +49,16 @@ export function prehideHero(hero) {
 }
 
 /**
- * Hero Scroll Alignment Interaction:
+ * Hero Scroll Alignment Interaction & Together Scroll:
  * 1. Initial State (Page Load / Scroll = 0):
- *    - Hero sits at top: 0 inside the initial viewport.
- *    - White 3D Logo is UP (y: 0), 100% visible.
- *    - Black Information Box is SLIGHTLY LOWER (y: 110px), 100% visible in the same viewport.
- * 2. On Scroll:
- *    - As user scrolls down through the hero section (0 to 400px), Black Box travels UP to y: 0.
- * 3. Final Alignment:
- *    - When Black Box aligns horizontally with 3D Logo (y: 0), normal page scrolling continues naturally.
+ *    - 3D Logo is UP (y: 0), 100% visible on left.
+ *    - Black Information Box is SLIGHTLY LOWER (y: 110px), 100% visible on right inside same viewport.
+ * 2. On Scroll Down:
+ *    - Hero pins at top: 0 for +45vh scroll distance.
+ *    - Black Box travels UP from 110px to 0px while 3D Logo stays anchored in place.
+ * 3. Final Alignment & Together Scroll:
+ *    - Once Black Box reaches y: 0 (aligned horizontally with 3D Logo), alignment finishes.
+ *    - Hero unpins cleanly, and Logo + Black Box scroll DOWN TOGETHER as one aligned composition into the next sections.
  */
 export function heroScrollAlignment(hero) {
   if (!hero) return null;
@@ -77,8 +78,12 @@ export function heroScrollAlignment(hero) {
     scrollTrigger: {
       trigger: hero,
       start: "top top",
-      end: "top+=400 top",
-      scrub: 0.6,
+      end: "+=45vh",
+      pin: true,
+      pinSpacing: true,
+      scrub: 0.7,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
     },
   });
 

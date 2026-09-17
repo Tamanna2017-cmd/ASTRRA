@@ -4,12 +4,15 @@ import Logo3D from "../components/Logo3D";
 import Magnetic from "../components/Magnetic";
 
 /**
- * Hero Composition — AstraTech 3D Logo + Black Information Box:
- * 1. Page Load: Entire composition fits inside initial 100vh viewport.
- * 2. 3D Logo (Left/Center): Rotating 3D AstraTech Company Logo (positioned UP).
- * 3. Black Information Box (Right/Center): Premium dark info card containing company headline, copy & CTAs (positioned DOWN initially).
- * 4. Scroll Interaction: On scroll down, Black Box travels UP until aligning with 3D Logo, then unpins cleanly for normal page scroll.
- * 5. Background: Dark subtle futuristic atmosphere with low opacity background image.
+ * Three Independent Hero Layers Architecture:
+ * 1. Background Layer: Provided exclusively by <FixedBackground /> (separate full-screen layer behind everything).
+ * 2. Left Foreground Element: 3D White AstraTech Logo with complete unclipped circular ring.
+ * 3. Right Foreground Element: Black Information Box (contains title, headline, copy & CTAs).
+ * 
+ * Flow:
+ * - Post-Intro: Both 3D Logo (UP) and Black Box (SLIGHTLY LOWER) are 100% visible immediately (no initial scroll needed).
+ * - Scroll Interaction: Black Box moves UP until aligning with 3D Logo at y: 0.
+ * - Continued Scroll: Logo + Black Box scroll down TOGETHER as one aligned hero composition into next sections.
  */
 export default function Hero({ start = true }) {
   const heroRef = useRef(null);
@@ -37,16 +40,6 @@ export default function Hero({ start = true }) {
 
   return (
     <section className="hero" id="top" ref={heroRef}>
-      {/* Dark Subtle Decorative Background Layer */}
-      <div className="hero__bg" aria-hidden="true" data-hero-bg>
-        <img
-          src="/astrra-hero-bg.jpg"
-          alt=""
-          className="hero__bg-img"
-        />
-        <div className="hero__bg-overlay" />
-      </div>
-
       {/* Top Meta Line */}
       <div className="hero__topline" data-hero-meta>
         <span>ASTRRA TECH / DIGITAL STUDIO</span>
@@ -55,14 +48,14 @@ export default function Hero({ start = true }) {
         </span>
       </div>
 
-      {/* Main Viewport Content Composition */}
+      {/* Main Viewport Content Grid */}
       <div className="hero__container">
-        {/* Left / Upper Zone: 3D AstraTech Company Logo */}
+        {/* Left Side: 3D AstraTech Logo Component (Positioned HIGHER, Unclipped Circular Ring) */}
         <div className="hero__logo-zone" data-hero-3d-logo>
           <Logo3D />
         </div>
 
-        {/* Right / Slightly Lower Zone: Black Information Box */}
+        {/* Right Side: Black Information Box (Positioned SLIGHTLY LOWER Initially) */}
         <div className="hero__black-box" data-hero-black-box>
           <div className="hero__black-box-inner">
             <p className="eyebrow hero__eyebrow" data-hero-label>
