@@ -35,6 +35,15 @@ export default function Hero({ start = true }) {
 
   return (
     <section className="hero" id="top" ref={heroRef}>
+      <div className="hero__bg-layer" data-hero-bg aria-hidden="true">
+        <img
+          src="/astrra-hero-bg.jpg"
+          alt=""
+          className="hero__bg-img"
+        />
+        <div className="hero__bg-overlay" />
+      </div>
+
       <div className="hero__topline" data-hero-meta>
         <span>ASTRRA TECH / DIGITAL STUDIO</span>
         <span className="hero__status">

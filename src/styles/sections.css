@@ -9,7 +9,7 @@
    CINEMATIC FIXED BACKGROUND
    ========================================================= */
 
-/* ========================= HERO & FIXED BACKGROUND ========================= */
+/* ========================= HERO & BACKGROUND LAYER ========================= */
 
 .fixed-background {
   position: fixed;
@@ -22,39 +22,37 @@
   background: #050505;
 }
 
-.fixed-background__image {
+.hero__bg-layer {
   position: absolute;
   inset: -5%;
   width: 110%;
   height: 110%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
   will-change: transform;
 }
 
-.fixed-background__bg-img {
+.hero__bg-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: brightness(0.78) contrast(1.08) saturate(1.1);
+  opacity: 0.8;
+  filter: brightness(0.85) contrast(1.08) saturate(1.1);
 }
 
-.fixed-background__overlay {
+.hero__bg-overlay {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(200, 169, 107, 0.06),
-      transparent 55%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.42) 0%,
-      rgba(0, 0, 0, 0.18) 35%,
-      rgba(0, 0, 0, 0.58) 100%
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(5, 5, 5, 0.45) 0%,
+    rgba(5, 5, 5, 0.20) 35%,
+    rgba(5, 5, 5, 0.65) 100%
+  );
   pointer-events: none;
   z-index: 1;
 }
@@ -66,7 +64,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding-top: clamp(100px, 12vh, 140px);
+  padding-top: clamp(105px, 12vh, 145px);
   padding-bottom: clamp(60px, 8vh, 100px);
   overflow: hidden;
   background: transparent;

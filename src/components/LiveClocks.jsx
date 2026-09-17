@@ -31,7 +31,7 @@ export default function LiveClocks({ className = "" }) {
     <div className={`live-clocks ${className}`} aria-label="Indian Standard Time">
       <div className="live-clock__item">
         <span className="live-clock__dot" aria-hidden="true" />
-        <span className="live-clock__label">INDIA</span>
+        <span className="live-clock__label">INDIA / IST</span>
         <span className="live-clock__val">{timeStr || "--:--:-- --"}</span>
       </div>
     </div>

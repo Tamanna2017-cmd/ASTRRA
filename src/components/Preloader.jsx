@@ -3,14 +3,14 @@ import { createPreloader } from "../animations/preloaderAnimation";
 import { reducedMotion } from "../animations/animationConfig";
 
 /**
- * Premium brand preloader: features official company logo asset,
- * subtle scale/fade reveal, thin counter to 100, and curtain lift exit.
+ * Cinematic Studio Intro Preloader:
+ * Features ONLY the centered transparent white ASTRRA TECH logo asset.
+ * Smooth entrance (opacity 0->1, scale 0.92->1, y 20->0), hold,
+ * exit (scale 1->1.04, opacity 1->0), and curtain reveal into the hero.
  */
 export default function Preloader({ onDone }) {
   const rootRef = useRef(null);
   const brandRef = useRef(null);
-  const counterRef = useRef(null);
-  const subtitleRef = useRef(null);
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function Preloader({ onDone }) {
       if (reducedMotion()) {
         setHidden(true);
       } else {
-        window.setTimeout(() => setHidden(true), 1000);
+        window.setTimeout(() => setHidden(true), 900);
       }
     };
 
@@ -34,8 +34,6 @@ export default function Preloader({ onDone }) {
     const tl = createPreloader({
       root: rootRef.current,
       brand: brandRef.current,
-      subtitle: subtitleRef.current,
-      counterEl: counterRef.current,
       onComplete: finish,
     });
 
@@ -56,15 +54,9 @@ export default function Preloader({ onDone }) {
           alt="ASTRRA TECH"
           className="preloader__logo-img"
         />
-        <span ref={subtitleRef} className="preloader__tagline">
-          MAKE YOUR SPACE DIGITALLY
-        </span>
       </div>
-      <div ref={counterRef} className="preloader__counter">
-        000
-      </div>
-      <span className="preloader__line" />
     </div>
   );
 }
+
 

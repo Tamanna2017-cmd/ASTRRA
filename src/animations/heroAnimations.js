@@ -77,10 +77,6 @@ export function prehideHero(hero) {
   );
 }
 
-/**
- * Subtle hero parallax on scroll: headline drifts up slightly while the
- * decorative glow recedes — keeps the opening alive without excess.
- */
 export function heroScrollDrift(hero) {
   if (reducedMotion()) return null;
 
@@ -93,11 +89,9 @@ export function heroScrollDrift(hero) {
     },
   });
 
-  tl.to("[data-hero-content]", { y: -70, ease: "none" }, 0).to(
-    "[data-hero-glow]",
-    { y: 110, ease: "none" },
-    0
-  );
+  tl.to("[data-hero-content]", { y: -60, ease: "none" }, 0)
+    .to("[data-hero-bg]", { y: 40, ease: "none" }, 0);
 
   return tl;
 }
+
