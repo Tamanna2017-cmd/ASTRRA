@@ -9,7 +9,7 @@
    CINEMATIC FIXED BACKGROUND
    ========================================================= */
 
-/* ========================= HERO & BACKGROUND LAYER ========================= */
+/* ========================= HERO & FIXED BACKGROUND ========================= */
 
 .fixed-background {
   position: fixed;
@@ -22,37 +22,39 @@
   background: #050505;
 }
 
-.hero__bg-layer {
+.fixed-background__image {
   position: absolute;
   inset: -5%;
   width: 110%;
   height: 110%;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
   will-change: transform;
 }
 
-.hero__bg-img {
+.fixed-background__bg-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  opacity: 0.8;
-  filter: brightness(0.85) contrast(1.08) saturate(1.1);
+  filter: brightness(0.78) contrast(1.08) saturate(1.1);
 }
 
-.hero__bg-overlay {
+.fixed-background__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(5, 5, 5, 0.45) 0%,
-    rgba(5, 5, 5, 0.20) 35%,
-    rgba(5, 5, 5, 0.65) 100%
-  );
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(200, 169, 107, 0.06),
+      transparent 55%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.42) 0%,
+      rgba(0, 0, 0, 0.18) 35%,
+      rgba(0, 0, 0, 0.58) 100%
+    );
   pointer-events: none;
   z-index: 1;
 }
@@ -64,10 +66,51 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding-top: clamp(105px, 12vh, 145px);
-  padding-bottom: clamp(60px, 8vh, 100px);
+  padding-top: clamp(96px, 11vh, 130px);
+  padding-bottom: clamp(40px, 6vh, 80px);
   overflow: hidden;
   background: transparent;
+}
+
+/* Embedded Hero Background Layer (80% opacity web-development image) */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero__bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.8;
+  filter: contrast(1.05) saturate(1.15);
+}
+
+.hero__bg-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(200, 169, 107, 0.08),
+      transparent 50%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.42) 0%,
+      rgba(0, 0, 0, 0.20) 35%,
+      rgba(0, 0, 0, 0.58) 100%
+    );
+  pointer-events: none;
+  z-index: 1;
 }
 
 .hero__topline {

@@ -35,7 +35,8 @@ export default function Hero({ start = true }) {
 
   return (
     <section className="hero" id="top" ref={heroRef}>
-      <div className="hero__bg-layer" data-hero-bg aria-hidden="true">
+      {/* Embedded Hero Background Image Layer */}
+      <div className="hero__bg" aria-hidden="true" data-hero-bg>
         <img
           src="/astrra-hero-bg.jpg"
           alt=""

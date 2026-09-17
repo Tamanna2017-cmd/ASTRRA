@@ -3,10 +3,8 @@ import { createPreloader } from "../animations/preloaderAnimation";
 import { reducedMotion } from "../animations/animationConfig";
 
 /**
- * Cinematic Studio Intro Preloader:
- * Features ONLY the centered transparent white ASTRRA TECH logo asset.
- * Smooth entrance (opacity 0->1, scale 0.92->1, y 20->0), hold,
- * exit (scale 1->1.04, opacity 1->0), and curtain reveal into the hero.
+ * Premium brand preloader intro: features ONLY the centered transparent white
+ * ASTRRA TECH logo asset. Executes entrance, cinematic hold, and curtain exit.
  */
 export default function Preloader({ onDone }) {
   const rootRef = useRef(null);
