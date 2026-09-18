@@ -11,7 +11,7 @@ export default function SmoothScroll({ children }) {
     if (reducedMotion()) return;
 
     const lenis = new Lenis({
-      duration: 1.35,
+      duration: 0.75,
       smoothWheel: true,
       smoothTouch: false,
       wheelMultiplier: 0.9,
@@ -46,7 +46,7 @@ export default function SmoothScroll({ children }) {
 
       lenis.scrollTo(target, {
         offset: -70,
-        duration: 1.35,
+        duration: 0.75,
         easing: (t) => 1 - Math.pow(1 - t, 4),
       });
     };

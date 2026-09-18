@@ -23,11 +23,11 @@ export default function RevealManager() {
           {
             autoAlpha: 1,
             y: 0,
-            duration: 1.15,
+            duration: 0.55,
             ease: "power3.out",
             scrollTrigger: {
               trigger: el,
-              start: "top 82%",
+              start: "top 92%",
               once: true,
             },
           }
@@ -53,12 +53,12 @@ export default function RevealManager() {
           {
             autoAlpha: 1,
             y: 0,
-            duration: 1,
-            stagger: 0.12,
+            duration: 0.5,
+            stagger: 0.06,
             ease: "power3.out",
             scrollTrigger: {
               trigger: parent,
-              start: "top 80%",
+              start: "top 92%",
               once: true,
             },
           }
@@ -79,11 +79,11 @@ export default function RevealManager() {
           },
           {
             autoAlpha: 1,
-            duration: 1.3,
+            duration: 0.6,
             ease: "power2.out",
             scrollTrigger: {
               trigger: el,
-              start: "top 88%",
+              start: "top 94%",
               once: true,
             },
           }
@@ -105,11 +105,11 @@ export default function RevealManager() {
           },
           {
             scaleX: 1,
-            duration: 1.25,
+            duration: 0.6,
             ease: "power3.inOut",
             scrollTrigger: {
               trigger: el,
-              start: "top 88%",
+              start: "top 94%",
               once: true,
             },
           }
