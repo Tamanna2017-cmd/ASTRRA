@@ -27,7 +27,7 @@ export default function SmoothScroll({ children }) {
     };
 
     gsap.ticker.add(raf);
-    gsap.ticker.lagSmoothing(0);
+    gsap.ticker.lagSmoothing(1000, 16);
 
     const onClick = (e) => {
       const link = e.target.closest('a[href^="#"]');

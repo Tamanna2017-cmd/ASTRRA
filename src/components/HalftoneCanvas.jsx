@@ -31,13 +31,13 @@ export default function HalftoneCanvas() {
       const w = window.innerWidth;
       const h = window.innerHeight;
 
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = w * dpr;
       canvas.height = h * dpr;
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
 
-      ctx.scale(dpr, dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       // Create an offscreen canvas to sample image brightness
       const sampleScale = 0.25; // sample down for speed
@@ -115,9 +115,24 @@ export default function HalftoneCanvas() {
     };
 
     let startTime = performance.now();
+    let isScrolling = false;
+    let scrollTimer = null;
+
+    const handleScroll = () => {
+      isScrolling = true;
+      window.clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(() => {
+        isScrolling = false;
+      }, 120);
+    };
 
     const render = (time) => {
       if (!isLoaded || !canvas || !ctx) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
+
+      if (isScrolling || document.hidden) {
         animationFrameId = requestAnimationFrame(render);
         return;
       }
@@ -162,10 +177,13 @@ export default function HalftoneCanvas() {
     };
 
     window.addEventListener("resize", handleResize, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      window.clearTimeout(scrollTimer);
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
