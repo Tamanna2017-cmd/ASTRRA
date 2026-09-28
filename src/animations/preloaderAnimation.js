@@ -1,48 +1,77 @@
 import { gsap, reducedMotion } from "./animationConfig";
 
 /**
- * Full-page preloader intro sequence:
- * 1. Full-screen dark background (#050505).
- * 2. White transparent logo entrance: opacity 0->1, scale 0.92->1, y 20px->0 (power3.out ~1.2s).
- * 3. Short cinematic hold (~0.5s).
- * 4. Logo exit: scale 1->1.04, opacity 1->0 (power2.in ~0.5s).
- * 5. Preloader curtain lifts: yPercent 0->-100 (power4.inOut ~0.85s) unveiling the hero.
+ * 2x2 Halftone Grid Reveal Preloader Sequence:
+ * 1. Instant full-viewport 2x2 grid on load (no fade-in needed for the grid itself).
+ * 2. Hold for ~1.1s so the layout registers.
+ * 3. Main headline ("Make your space digitally.") slides/fades up from bottom, overlapping the grid.
+ * 4. Grid cells fade out / headline background covers them (~0.5s).
+ * 5. Preloader finishes: signal website reveal (onRevealStart), unlock body scroll, hero takes over.
+ * 6. Total duration ~2.35s (strictly within the 2.5–3s limit).
  */
 export function createPreloader({
   root,
-  brand,
-  onComplete,
+  grid,
+  headline,
   onRevealStart,
+  onComplete,
 } = {}) {
   if (reducedMotion()) {
+    onRevealStart && onRevealStart();
     onComplete && onComplete();
     return null;
   }
 
-  const tl = gsap.timeline({ onComplete });
+  const tl = gsap.timeline({
+    onComplete: () => {
+      onComplete && onComplete();
+    },
+  });
 
-  tl.fromTo(
-    brand,
-    { autoAlpha: 0, scale: 0.88, filter: "blur(6px)" },
-    { autoAlpha: 1, scale: 1, filter: "blur(0px)", duration: 1.1, ease: "power3.out" },
-    0.15
-  )
-    /* Short premium hold */
-    .to({}, { duration: 0.45 })
-    /* Logo exit transition */
+  // Ensure initial visibility of root and grid without any fade-in lag
+  gsap.set(root, { autoAlpha: 1, visibility: "visible" });
+  gsap.set(grid, { autoAlpha: 1 });
+  gsap.set(headline, { autoAlpha: 0, y: 70 });
+
+  // 1. Hold for ~1.15s
+  tl.to({}, { duration: 1.15 })
+
+    // 2. Main headline text slides & fades up from bottom, overlapping the grid
     .to(
-      brand,
-      { autoAlpha: 0, scale: 1.05, duration: 0.45, ease: "power2.in" }
+      headline,
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.75,
+        ease: "power3.out",
+      }
     )
-    /* Signal website reveal right as curtain lifts */
+
+    // 3. Grid cells fade out / headline background covers them
+    .to(
+      grid,
+      {
+        autoAlpha: 0,
+        duration: 0.5,
+        ease: "power2.inOut",
+      },
+      "-=0.35"
+    )
+
+    // 4. Brief cinematic hold on headline before hand-off
+    .to({}, { duration: 0.25 })
+
+    // 5. Signal page reveal right before preloader fades out
     .call(() => {
       onRevealStart && onRevealStart();
     })
-    /* Full-screen viewport curtain lifts away */
-    .to(root, { yPercent: -100, duration: 0.85, ease: "power4.inOut" });
+
+    // 6. Preloader curtain fades away cleanly to unveil the ready Hero
+    .to(root, {
+      autoAlpha: 0,
+      duration: 0.45,
+      ease: "power2.out",
+    });
 
   return tl;
 }
-
-
-

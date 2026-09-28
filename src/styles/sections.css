@@ -24,21 +24,10 @@
 
 .fixed-background__image {
   position: absolute;
-  inset: -5%;
-  width: 110%;
-  height: 110%;
-  will-change: transform;
-}
-
-.fixed-background__bg-img {
-  position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
-  opacity: 0.22;
-  filter: brightness(0.72) contrast(1.1) saturate(1.1);
+  will-change: transform;
 }
 
 .fixed-background__overlay {
@@ -47,14 +36,14 @@
   background:
     radial-gradient(
       circle at 50% 45%,
-      rgba(200, 169, 107, 0.05),
-      transparent 60%
+      rgba(200, 169, 107, 0.04),
+      transparent 70%
     ),
     linear-gradient(
       180deg,
-      rgba(5, 5, 5, 0.85) 0%,
-      rgba(5, 5, 5, 0.65) 40%,
-      rgba(5, 5, 5, 0.95) 100%
+      rgba(5, 5, 5, 0.4) 0%,
+      rgba(5, 5, 5, 0.2) 40%,
+      rgba(5, 5, 5, 0.7) 100%
     );
   pointer-events: none;
   z-index: 1;
@@ -81,7 +70,7 @@
   display: flex;
   justify-content: space-between;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.16em;
   color: var(--muted-deep);
   text-transform: uppercase;
@@ -235,7 +224,7 @@
   align-items: center;
   gap: 14px;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.18em;
   color: var(--muted-deep);
   text-transform: uppercase;
@@ -273,7 +262,7 @@
   bottom: 34px;
   right: var(--gutter);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.18em;
   color: var(--muted-deep);
   text-transform: uppercase;
@@ -360,14 +349,14 @@
 
 .about__fact span {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--gold-deep);
   letter-spacing: 0.1em;
 }
 
 .about__fact p {
   margin-top: 10px;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.01em;
 }
@@ -449,7 +438,7 @@
 
 .service-row__num {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   color: var(--muted-deep);
   letter-spacing: 0.1em;
   transition: color 0.35s ease;
@@ -467,7 +456,7 @@
   left: calc(70px + clamp(18px, 3vw, 44px));
   bottom: 8px;
   max-width: 440px;
-  font-size: 12.5px;
+  font-size: 15.5px;
   line-height: 1.55;
   color: var(--muted);
   opacity: 0;
@@ -479,7 +468,7 @@
 .service-row__tag {
   justify-self: end;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.16em;
   color: var(--muted-deep);
   text-transform: uppercase;
@@ -596,14 +585,14 @@
 
 .expertise__item p {
   margin-top: 12px;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.65;
   color: var(--muted);
 }
 
 .expertise__item .num {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--gold);
   letter-spacing: 0.12em;
 }
@@ -712,7 +701,7 @@
 
 .process__index {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: 0.14em;
   color: var(--muted-deep);
   text-transform: uppercase;
@@ -733,7 +722,7 @@
 
 .process__step p {
   margin-top: 12px;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.65;
   color: var(--muted-deep);
 }
@@ -834,7 +823,7 @@
   bottom: 14px;
   z-index: 2;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   color: var(--ink);
   text-transform: uppercase;
@@ -851,7 +840,7 @@
 
 .project__num {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   color: var(--gold);
   margin-right: 4px;
 }
@@ -864,7 +853,7 @@
 
 .project__year {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--muted-deep);
 }
 
@@ -874,7 +863,7 @@
   gap: 16px;
   margin-top: 12px;
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 12.5px;
   letter-spacing: 0.12em;
   color: var(--muted);
   text-transform: uppercase;
@@ -883,7 +872,7 @@
 .project__desc {
   margin-top: 18px;
   max-width: 400px;
-  font-size: 13.5px;
+  font-size: 16.5px;
   line-height: 1.7;
   color: var(--muted);
 }
@@ -894,7 +883,7 @@
   gap: 10px;
   margin-top: 24px;
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 13.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink);
@@ -940,7 +929,7 @@
   padding-bottom: 18px;
   border-bottom: 1px solid var(--line-dark);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: 0.16em;
   color: var(--muted-deep);
   text-transform: uppercase;
@@ -976,7 +965,7 @@
   gap: 18px;
   margin-top: clamp(36px, 5vw, 64px);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   letter-spacing: 0.1em;
   color: var(--muted-deep);
   text-transform: uppercase;
@@ -1057,7 +1046,7 @@
 .cta__circle-text text {
   fill: var(--muted);
   font-family: var(--font-mono);
-  font-size: 9.2px;
+  font-size: 12.2px;
   letter-spacing: 0.34em;
   text-transform: uppercase;
 }
@@ -1133,7 +1122,7 @@
   padding: 24px 0;
   border-top: 1px solid var(--line);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 15px;
   letter-spacing: 0.06em;
   color: var(--ink);
   transition: color 0.3s ease, padding-left 0.4s var(--ease);
@@ -1189,14 +1178,14 @@
 
 .footer__brand small {
   color: var(--gold);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
 }
 
 .footer__tagline {
   margin-top: 12px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: 0.16em;
   color: var(--muted-deep);
   text-transform: uppercase;
@@ -1210,7 +1199,7 @@
 
 .footer__link {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
@@ -1230,7 +1219,7 @@
   padding-top: 20px;
   border-top: 1px solid var(--line-soft);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   color: var(--muted-deep);
   text-transform: uppercase;
@@ -1366,7 +1355,7 @@
 
   .about__statement {
     flex-wrap: wrap;
-    font-size: 11px;
+    font-size: 14px;
     gap: 14px;
   }
 
@@ -1544,7 +1533,7 @@
 
 .logo-marquee__tag {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   color: var(--muted-deep);
   text-transform: uppercase;
@@ -1592,7 +1581,7 @@
 
 .stat-item__label {
   margin-top: 18px;
-  font-size: 13.5px;
+  font-size: 16.5px;
   line-height: 1.5;
   color: var(--muted);
 }

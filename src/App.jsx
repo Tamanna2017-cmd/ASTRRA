@@ -1,9 +1,7 @@
 import FixedBackground from "./components/FixedBackground";
 import React, { useState } from "react";
 
-import Preloader from "./components/Preloader";
 import SmoothScroll from "./components/SmoothScroll";
-import Cursor from "./components/Cursor";
 import RevealManager from "./components/RevealManager";
 import StatsCounter from "./components/StatsCounter";
 import LogoMarquee from "./components/LogoMarquee";
@@ -21,14 +19,12 @@ import Contact from "./sections/Contact";
 import Footer from "./sections/Footer";
 
 function App() {
-  const [introDone, setIntroDone] = useState(false);
+  const [introDone, setIntroDone] = useState(true);
 
   return (
     <div className="app">
       <FixedBackground />
-      <Preloader onDone={() => setIntroDone(true)} />
       <SmoothScroll>
-        <Cursor />
         <RevealManager />
         <Navbar ready={introDone} />
 

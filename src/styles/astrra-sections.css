@@ -992,7 +992,7 @@
 
   .section-label,
   .section-count {
-    font-size: 9px;
+    font-size: 12px;
   }
 
   .section-title {
@@ -1011,7 +1011,7 @@
   .showcase-overlay small {
     right: 15px;
     bottom: 15px;
-    font-size: 8px;
+    font-size: 11px;
   }
 
   .showcase-title {

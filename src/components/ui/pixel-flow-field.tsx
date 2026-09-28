@@ -84,23 +84,24 @@ const TAU = Math.PI * 2;
 const DEFAULT_CELL_SIZE = 8;
 const DEFAULT_GAP = 3;
 const DEFAULT_SPEED = 1;
-const DEFAULT_TEXT = "ASTRRA";
+const DEFAULT_TEXT = "smooth";
 const DEFAULT_WEIGHT = 800;
 const DEFAULT_POINTER_RADIUS = 130;
 const DEFAULT_POINTER_STRENGTH = 1;
 const DEFAULT_FONT_FAMILY = "system-ui, sans-serif";
 
-// Ramp stops as theme tokens for dark gold agency palette:
-// dark field, gold accent, bright gold ink
+// Ramp stops as theme tokens. The hardcoded fallbacks are the same oklch
+// values the tokens resolve to in light mode, converted to sRGB:
+// neutral oklch(0.81 0 0), brand oklch(0.72 0.2 352.53), ink oklch(0.22 0 0).
 const DEFAULT_COLORS = [
-  "var(--color-smooth-500, #131311)",
-  "var(--color-brand, #c8a96b)",
-  "var(--color-foreground, #ddc084)",
+  "var(--color-smooth-500, oklch(0.81 0 0))",
+  "var(--color-brand, oklch(0.72 0.2 352.53))",
+  "var(--color-foreground, oklch(0.22 0 0))",
 ];
 const FALLBACK_COLORS: Rgba[] = [
-  [19, 19, 17, 1],
-  [200, 169, 107, 1],
-  [221, 192, 132, 1],
+  [193, 193, 193, 1],
+  [239, 92, 152, 1],
+  [26, 26, 26, 1],
 ];
 
 const MIN_STEP = 3;
@@ -238,6 +239,11 @@ const resolveCssColors = (inputs: string[], host: HTMLElement): Rgba[] => {
 const mixChannel = (from: number, to: number, t: number) =>
   Math.round(from + (to - from) * t);
 
+/**
+ * Coverage → colour. Brightness travels through the ramp's lightness, not
+ * through opacity alone, which is what makes the sampled word actually read
+ * instead of looking like a dimmer patch of the same grey.
+ */
 const rampCss = (coverage: number, colors: Rgba[]) => {
   const field = colors[0] ?? FALLBACK_COLORS[0];
   const accent = colors[1] ?? colors[0] ?? FALLBACK_COLORS[1];
@@ -345,6 +351,11 @@ const createFieldController = (
     latticeWy = new Float32Array(count);
   };
 
+  /**
+   * Rasterises the source once into a cols x rows bitmap — one pixel per cell —
+   * and reads it back. Called only when the grid or the source changes, never
+   * from the frame loop.
+   */
   const sampleSource = () => {
     if (!samplerContext) {
       mask.fill(0);
@@ -374,6 +385,7 @@ const createFieldController = (
         );
         drewSource = true;
       } catch {
+        // A source the browser refuses to draw leaves the text path in charge.
         drewSource = false;
       }
     }
@@ -397,6 +409,7 @@ const createFieldController = (
     try {
       pixels = samplerContext.getImageData(0, 0, cols, rows).data;
     } catch {
+      // Tainted canvas (cross-origin image without CORS headers).
       pixels = null;
     }
     if (!pixels) {
@@ -474,6 +487,9 @@ const createFieldController = (
     cols = Math.max(1, Math.ceil(width / step));
     rows = Math.max(1, Math.ceil(height / step));
 
+    // The word is fitted to a fraction of the column count, so too few columns
+    // means too few cells per glyph and the word stops reading. On a narrow
+    // surface the grid densifies instead, keeping the type legible.
     const legibleStep = Math.max(width / MIN_COLS, MIN_STEP);
     if (width >= MIN_COLS && legibleStep < step) {
       cellPx *= legibleStep / step;
@@ -482,6 +498,8 @@ const createFieldController = (
       rows = Math.max(1, Math.ceil(height / step));
     }
 
+    // A dense grid over a large surface would blow the frame budget, so the
+    // grid is coarsened rather than truncated — coverage stays complete.
     if (cols * rows > MAX_CELLS) {
       const scale = Math.sqrt((cols * rows) / MAX_CELLS);
       step *= scale;
@@ -538,6 +556,7 @@ const createFieldController = (
     buildGrid();
   };
 
+  /** Adds one cell to the current path around its centre. Never fills. */
   const traceCell = (cx: number, cy: number, size: number) => {
     const half = size / 2;
     if (settings.shape === "circle") {
@@ -554,6 +573,7 @@ const createFieldController = (
     context.rect(cx - half, cy - half, size, size);
   };
 
+  /** Refreshes the coarse flow lattice. O(cols + rows), not O(cells). */
   const updateFlowField = (time: number) => {
     for (let ly = 0; ly < latRows; ly++) {
       const gy = ly * LATTICE * NOISE_SCALE;
@@ -573,6 +593,7 @@ const createFieldController = (
     }
   };
 
+  /** Stamps a decaying impulse into every cell inside the pointer radius. */
   const stampWake = (px: number, py: number, dt: number) => {
     const radius = Math.max(settings.pointerRadius, 1);
     const limit = radius * radius;
@@ -607,6 +628,10 @@ const createFieldController = (
     }
   };
 
+  /**
+   * Walks the segment the pointer covered since the previous frame so a fast
+   * flick leaves a continuous trail instead of a dotted line of impacts.
+   */
   const advanceWake = (dt: number) => {
     if (!pointerActive) {
       previousPointerX = pointerX;
@@ -626,6 +651,7 @@ const createFieldController = (
     previousPointerY = pointerY;
   };
 
+  /** The one frame drawn when motion is reduced: grid at rest, word legible. */
   const drawResolved = () => {
     for (let tier = 0; tier < tiers.length; tier++) {
       const bucket = tiers[tier];
@@ -689,6 +715,8 @@ const createFieldController = (
         if (!settled) {
           const local = clamp((reform - delay[i] * STAGGER) * rest, 0, 1);
           const inverse = 1 - local;
+          // Ease-out cubic: cells decelerate into place instead of arriving
+          // at a constant speed.
           const eased = 1 - inverse * inverse * inverse;
           x = scatterX[i] + (restX - scatterX[i]) * eased;
           y = scatterY[i] + (restY - scatterY[i]) * eased;
@@ -731,6 +759,8 @@ const createFieldController = (
     advanceWake(dt);
 
     const reform = clamp((now - scatterAt) / REFORM_MS, 0, 1);
+    // Exponential decay, so the wake settles like momentum bleeding off
+    // rather than fading on a straight line.
     drawFlowing(reform, Math.exp(-dt / WAKE_TAU));
   };
 
@@ -783,6 +813,8 @@ const createFieldController = (
       if (next) {
         lastFrameAt = performance.now();
         if (!hasStarted) {
+          // The reveal plays when the field first becomes visible, not while
+          // it is still parked below the fold.
           hasStarted = true;
           scatterAt = lastFrameAt;
         }
@@ -840,6 +872,8 @@ const PixelFlowField = ({
     setResolvedColors(resolveCssColors(colorKey.split("|"), host));
   }, [colorKey]);
 
+  // The sampled word should be set in the same typeface as the surrounding
+  // page, so the family is read off the host instead of being hardcoded.
   useEffect(() => {
     const host = hostRef.current;
     if (!host) {
@@ -852,7 +886,9 @@ const PixelFlowField = ({
       }
     };
     read();
-    document.fonts.ready.then(read).catch(() => {});
+    document.fonts.ready.then(read).catch(() => {
+      // A font that never resolves just leaves the fallback family in place.
+    });
     return () => {
       cancelled = true;
     };
@@ -986,6 +1022,7 @@ const PixelFlowField = ({
       return;
     }
 
+    // Pointer events, not hover: a touch drag has to leave a wake too.
     const track = (event: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
       controllerRef.current?.setPointer(

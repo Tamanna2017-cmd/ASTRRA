@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "../animations/animationConfig";
 import LiveClocks from "../components/LiveClocks";
+import { AnimatedTabs } from "../components/ui/animated-tabs";
 
 const LINKS = [
-  { label: "Services", href: "#services" },
-  { label: "Work", href: "#work" },
-  { label: "Process", href: "#process" },
-  { label: "About", href: "#about" },
+  { id: "#services", label: "Services" },
+  { id: "#work", label: "Work" },
+  { id: "#process", label: "Process" },
+  { id: "#about", label: "About" },
 ];
 
 /**
@@ -70,11 +71,10 @@ export default function Navbar({ ready = true }) {
         <LiveClocks className="navbar__clocks" />
 
         <nav className="nav-links" aria-label="Primary">
-          {LINKS.map(({ label, href }) => (
-            <a key={href} href={href} className="nav-link">
-              {label}
-            </a>
-          ))}
+          <AnimatedTabs 
+            tabs={LINKS} 
+            onChange={(tabId) => { window.location.hash = tabId; }}
+          />
         </nav>
 
         <a href="#contact" className="nav-cta">
@@ -108,10 +108,10 @@ export default function Navbar({ ready = true }) {
             <p className="eyebrow mobile-menu__label">MENU</p>
           </div>
 
-          {LINKS.map(({ label, href }) => (
+          {LINKS.map(({ label, id }) => (
             <a
-              key={href}
-              href={href}
+              key={id}
+              href={id}
               className="mobile-menu__link"
               onClick={() => setOpen(false)}
             >
