@@ -66,12 +66,16 @@
 .flex { display: flex; }
 
 /* ---------- Reset ---------- */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* Kept in @layer base so Tailwind's utility layer can override it.
+   Unlayered, this reset silently killed every padding and margin utility. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 html {

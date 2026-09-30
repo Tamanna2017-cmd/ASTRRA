@@ -335,12 +335,17 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid var(--line-dark);
-  margin-top: 14px;
+  margin-top: 34px;
 }
 
 .about__fact {
-  padding: 22px 18px 4px 0;
+  padding: 30px 28px 10px 0;
   border-right: 1px solid var(--line-dark);
+}
+
+/* Keep text clear of the vertical dividers */
+.about__fact:not(:first-child) {
+  padding-left: 24px;
 }
 
 .about__fact:last-child {
@@ -355,7 +360,7 @@
 }
 
 .about__fact p {
-  margin-top: 10px;
+  margin-top: 14px;
   font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -760,6 +765,12 @@
   line-height: 1.75;
 }
 
+.projects__carousel-area {
+  margin-top: clamp(48px, 6vw, 96px);
+  width: 100%;
+  position: relative;
+}
+
 .projects__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -916,6 +927,70 @@
 
 .testimonials .section-head__count {
   color: var(--muted-deep);
+}
+
+/* Testimonial cards: scoped padding/typography (component utility classes
+   may be purged by Tailwind, so enforce here). */
+.testimonials .rounded-3xl {
+  padding: 22px 24px;
+}
+
+.testimonials .rounded-3xl > div:first-child {
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: #2a2a27;
+}
+
+.testimonials .rounded-3xl .mt-6 {
+  margin-top: 18px;
+  padding-top: 14px;
+}
+
+/* ========================= TEAM ========================= */
+/* Scoped classes instead of Tailwind utilities here — utilities in this
+   drop-in component were observed being purged (e.g. the p-6 on
+   testimonial cards). These rules guarantee the card styling. */
+.team-head {
+  padding-inline: clamp(20px, 3vw, 48px);
+  padding-bottom: clamp(36px, 5vw, 64px);
+}
+
+.team-card__overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 64px 22px 20px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.92) 0%,
+    rgba(0, 0, 0, 0.55) 45%,
+    transparent 100%
+  );
+}
+
+.team-card__name {
+  margin: 0;
+  padding-left: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.team-card__role {
+  margin: 0;
+  padding-left: 8px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.testimonials__columns-mask {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 16%, black 84%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, black 16%, black 84%, transparent);
 }
 
 .testimonials__figure {
@@ -1350,7 +1425,7 @@
   .about__fact {
     border-right: 0;
     border-bottom: 1px solid var(--line-dark-soft);
-    padding: 18px 0;
+    padding: 22px 0;
   }
 
   .about__statement {

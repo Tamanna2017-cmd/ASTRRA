@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+:root {
+  --background: #050505;
+  --foreground: #f4f3ef;
+  --primary: #c8a96b;
+  --primary-foreground: #050505;
+  --muted: #141412;
+  --muted-foreground: #96958d;
+  --border: rgba(244, 243, 239, 0.14);
+  --ring: #c8a96b;
+}
+
+/* Ensure container query utilities are supported if needed */
+@container (min-width: 32rem) {
+  .\@lg\:p-6 { padding: 1.5rem; }
+  .\@lg\:pt-20 { padding-top: 5rem; }
+  .\@lg\:text-\[17px\] { font-size: 17px; }
+}
+
+@container (min-width: 36rem) {
+  .\@xl\:mt-7 { margin-top: 1.75rem; }
+  .\@xl\:flex-row { flex-direction: row; }
+  .\@xl\:items-start { align-items: flex-start; }
+  .\@xl\:justify-between { justify-content: space-between; }
+  .\@xl\:gap-10 { gap: 2.5rem; }
+}
+
+@theme inline {
+  --animate-marquee: marquee var(--duration, 30s) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration, 30s) linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+@keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+  }
+}
