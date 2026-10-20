@@ -1,0 +1,56 @@
+import FixedBackground from "./components/FixedBackground";
+import React, { useState } from "react";
+
+import SmoothScroll from "./components/SmoothScroll";
+import RevealManager from "./components/RevealManager";
+import StatsCounter from "./components/StatsCounter";
+import LogoMarquee from "./components/LogoMarquee";
+
+import Navbar from "./sections/Navbar";
+import Hero from "./sections/Hero";
+import About from "./sections/About";
+import Services from "./sections/Services";
+import Expertise from "./sections/Expertise";
+import Process from "./sections/Process";
+import Projects from "./sections/Projects";
+import Testimonials from "./sections/Testimonials";
+// TeamSection deferred to next sprint
+import Pricing from "./sections/Pricing";
+import CustomSolutions from "./sections/CustomSolutions";
+import CTA from "./sections/CTA";
+import Contact from "./sections/Contact";
+import Footer from "./sections/Footer";
+
+function App() {
+  const [introDone, setIntroDone] = useState(true);
+
+  return (
+    <div className="app">
+      <FixedBackground />
+      <SmoothScroll>
+        <RevealManager />
+        <Navbar ready={introDone} />
+
+        <main>
+          <Hero start={introDone} />
+          <LogoMarquee title="RECENT HIRES & DIGITAL PARTNERS FROM" />
+          <About />
+          <StatsCounter />
+          <Services />
+          <Expertise />
+          <Process />
+          <Projects />
+          <Testimonials />
+          <Pricing />
+          <CustomSolutions />
+          <CTA />
+          <Contact />
+        </main>
+
+        <Footer />
+      </SmoothScroll>
+    </div>
+  );
+}
+
+export default App;
