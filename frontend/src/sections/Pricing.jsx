@@ -155,7 +155,7 @@ export default function Pricing() {
         {/* Section Header */}
         <header className="section-head section-head--dark">
           <p className="eyebrow" data-reveal>
-            07 / WEBSITE PLANS
+            08 / WEBSITE PLANS
           </p>
           <span className="section-head__count" data-reveal>
             TRANSPARENT PRICING

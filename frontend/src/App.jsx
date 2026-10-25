@@ -14,7 +14,7 @@ import Expertise from "./sections/Expertise";
 import Process from "./sections/Process";
 import Projects from "./sections/Projects";
 import Testimonials from "./sections/Testimonials";
-// TeamSection deferred to next sprint
+import { TeamSection } from "./components/ui/team";
 import Pricing from "./sections/Pricing";
 import CustomSolutions from "./sections/CustomSolutions";
 import CTA from "./sections/CTA";
@@ -41,6 +41,7 @@ function App() {
           <Process />
           <Projects />
           <Testimonials />
+          <TeamSection />
           <Pricing />
           <CustomSolutions />
           <CTA />

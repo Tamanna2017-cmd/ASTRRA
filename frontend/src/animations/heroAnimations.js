@@ -66,7 +66,7 @@ export function heroScrollAlignment(hero) {
   const blackBox = hero.querySelector("[data-hero-black-box]");
   if (!blackBox) return null;
 
-  if (reducedMotion()) {
+  if (reducedMotion() || (typeof window !== "undefined" && window.innerWidth < 768)) {
     gsap.set(blackBox, { y: 0 });
     return null;
   }

@@ -13,7 +13,7 @@ export default function CTA() {
       <div className="container">
         <header className="section-head">
           <p className="eyebrow" data-reveal>
-            08 / LET'S WORK TOGETHER
+            09 / LET'S WORK TOGETHER
           </p>
           <span className="section-head__count" data-reveal>
             OPEN / 2026

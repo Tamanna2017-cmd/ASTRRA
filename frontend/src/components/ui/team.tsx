@@ -1,51 +1,41 @@
 import React from "react";
 import { Marquee } from "@/components/ui/marquee";
+import { getAssetUrl } from "@/lib/utils";
 
 const teamMembers = [
   {
-    image:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&h=400&q=80",
-    name: "Patrick Stewart",
-    role: "CEO - Founder",
+    image: getAssetUrl("/madhav-jaybhaye.jpg"),
+    name: "Madhav Jaybhaye",
+    role: "CEO",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&h=400&q=80",
-    name: "Alena Rosser",
-    role: "Director of Content",
+    image: getAssetUrl("/aniket-musmade.jpg"),
+    name: "Aniket Prakash Musmade",
+    role: "Full-stack Developer",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&h=400&q=80",
-    name: "Fletch Skinner",
-    role: "Tech Manager",
+    image: getAssetUrl("/tamanna-thakur.jpg"),
+    name: "Tamanna Thakur",
+    role: "Graphic Designer",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&h=400&q=80",
-    name: "Marc Spector",
-    role: "Director of Content",
+    image: getAssetUrl("/hala-mustafa.jpg"),
+    name: "Hala Mustafa",
+    role: "Junior Graphic Designer & UI/UX",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=300&h=400&q=80",
-    name: "Natalia Skinner",
-    role: "Cnippet Researcher",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&h=400&q=80",
-    name: "David Kim",
-    role: "Engineering Lead",
+    image: getAssetUrl("/yogita-sharma.jpg"),
+    name: "Yogita Sharma",
+    role: "Junior Graphic Designer",
   },
 ];
 
 export function TeamSection() {
   return (
-    <section className="relative w-full overflow-hidden bg-background py-12 md:py-24">
+    <section id="team" className="team-section relative w-full overflow-hidden bg-[#050505] py-16 md:py-28" aria-label="The ASTRRA Team">
       <div>
         <svg
-          className="absolute right-0 bottom-0 text-neutral-200 dark:text-neutral-800"
+          className="absolute right-0 bottom-0 text-white/[0.04] pointer-events-none"
           fill="none"
           height="154"
           viewBox="0 0 460 154"
@@ -76,7 +66,7 @@ export function TeamSection() {
             07 / THE ASTRRA TEAM
           </p>
           <span className="section-head__count" data-reveal>
-            PEOPLE / 06
+            PEOPLE / {String(teamMembers.length).padStart(2, "0")}
           </span>
         </header>
 
@@ -89,10 +79,10 @@ export function TeamSection() {
       </div>
 
       {/* Full-bleed marquee — cards animate across the entire viewport width */}
-      <div className="relative z-10 w-full">
+      <div className="relative z-10 w-full mt-6">
         <div className="relative">
-          <div className="pointer-events-none absolute top-0 left-0 z-10 h-full w-24 md:w-32 bg-gradient-to-r from-background to-transparent" />
-          <div className="pointer-events-none absolute top-0 right-0 z-10 h-full w-24 md:w-32 bg-gradient-to-l from-background to-transparent" />
+          <div className="pointer-events-none absolute top-0 left-0 z-10 h-full w-24 md:w-32 bg-gradient-to-r from-[#050505] to-transparent" />
+          <div className="pointer-events-none absolute top-0 right-0 z-10 h-full w-24 md:w-32 bg-gradient-to-l from-[#050505] to-transparent" />
 
           <Marquee className="[--gap:1.5rem] [--duration:32s]" pauseOnHover reverse={true}>
             {teamMembers.map((member) => (
@@ -100,11 +90,12 @@ export function TeamSection() {
                 className="group/card flex w-64 md:w-72 shrink-0 flex-col"
                 key={member.name}
               >
-                <div className="relative h-[400px] w-full overflow-hidden rounded-2xl bg-neutral-900">
+                <div className="relative h-[400px] w-full overflow-hidden rounded-2xl bg-neutral-900 border border-white/[0.08] shadow-lg">
                   <img
                     alt={member.name}
                     className="h-full w-full object-cover grayscale transition-all duration-500 group-hover/card:grayscale-0 group-hover/card:scale-[1.04]"
                     src={member.image}
+                    loading="lazy"
                   />
                   <div className="team-card__overlay absolute inset-x-0 bottom-0">
                     <h3 className="team-card__name">{member.name}</h3>
